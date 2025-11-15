@@ -13,23 +13,13 @@
         }
 
         :root {
-            --primary: black;
-            --primary-foreground: #ffffff;
-            --background: #ffffff;
-            --foreground: black;
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-            --green-100: #dcfce7;
-            --green-600: #16a34a;
-            --yellow-400: #facc15;
-            --border-radius: 0.625rem;
+            --primary: #000000;
+            --primary-light: #333333;
+            --secondary: #F5F5F5;
+            --background: #FFFFFF;
+            --foreground: #222222;
+            --accent: #666666;
+            --card-bg: #FAFAFA;
         }
 
         body {
@@ -37,6 +27,7 @@
             line-height: 1.6;
             color: var(--foreground);
             background-color: var(--background);
+            overflow-x: hidden;
         }
 
         .container {
@@ -45,13 +36,61 @@
             padding: 0 1rem;
         }
 
+        /* Loading Screen */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loading.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader {
+            width: 64px;
+            height: 64px;
+            border: 4px solid var(--secondary);
+            border-top: 4px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite, pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
         /* Navigation */
         .navbar {
-            background: white;
-            border-bottom: 1px solid var(--gray-200);
-            position: sticky;
+            background: transparent;
+            backdrop-filter: blur(10px);
+            position: fixed;
             top: 0;
-            z-index: 50;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 2px solid var(--primary-light);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
         .nav-content {
@@ -65,28 +104,28 @@
         }
 
         .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            color: var(--background);
         }
 
-        .nav-logo {
-            width: 12rem;
-            height: 3rem;
-            background: transparent;
-            border-radius: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-
-        .nav-title {
-            font-size: 1.25rem;
-            font-weight: 500;
+        .navbar.scrolled .nav-brand {
             color: var(--primary);
+        }
+
+        .nav-brand:hover {
+            transform: scale(1.05);
+            background: var(--primary);
+            color: var(--background);
+        }
+
+        .navbar.scrolled .nav-brand:hover {
+            background: var(--primary);
+            color: var(--background);
         }
 
         .nav-links {
@@ -95,19 +134,33 @@
         }
 
         .nav-links a {
-            color: var(--gray-700);
+            color: var(--background);
             text-decoration: none;
-            transition: color 0.3s;
+            transition: all 0.3s;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .navbar.scrolled .nav-links a {
+            color: var(--foreground);
         }
 
         .nav-links a:hover {
+            background: var(--background);
             color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .navbar.scrolled .nav-links a:hover {
+            background: var(--primary);
+            color: var(--background);
         }
 
         .btn {
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: var(--border-radius);
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--background);
+            border-radius: 0.75rem;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s;
@@ -115,71 +168,89 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            background: transparent;
+            color: var(--background);
+        }
+
+        .navbar.scrolled .btn {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+
+        .btn:hover {
+            background: var(--background);
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+        }
+
+        .navbar.scrolled .btn:hover {
+            background: var(--primary);
+            color: var(--background);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         .btn-primary {
-            background: var(--primary);
-            color: var(--primary-foreground);
+            background: var(--background);
+            color: var(--primary);
         }
 
         .btn-primary:hover {
-            opacity: 0.9;
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--primary);
-            border: 1px solid var(--gray-300);
-        }
-
-        .btn-outline:hover {
-            background: var(--gray-50);
-        }
-
-        .btn-lg {
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
+            background: var(--primary);
+            color: var(--background);
         }
 
         /* Hero Section */
         .hero {
-            padding: 5rem 0;
-            background: linear-gradient(to bottom right, var(--gray-50), white);
+            padding: 8rem 0 5rem;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(51, 51, 51, 0.5)), url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1200&h=800&fit=crop') no-repeat center center;
+            background-size: cover;
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
         }
 
         .hero-content {
             display: grid;
             gap: 3rem;
             align-items: center;
+            position: relative;
+            z-index: 1;
         }
 
         .badge {
             display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: var(--primary);
-            color: white;
-            border-radius: 9999px;
+            padding: 0.5rem 1.5rem;
+            background: var(--background);
+            color: var(--primary);
+            border-radius: 2rem;
             font-size: 0.875rem;
             margin-bottom: 1rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
 
         .hero-title {
             font-size: 3rem;
-            font-weight: 500;
-            color: var(--gray-900);
+            font-weight: 600;
             margin-bottom: 1.5rem;
             line-height: 1.2;
-        }
-
-        .hero-title .text-primary {
-            color: var(--primary);
-            display: block;
+            animation: fadeInUp 0.8s ease forwards;
+            color: var(--background);
         }
 
         .hero-description {
             font-size: 1.25rem;
-            color: var(--gray-600);
+            color: var(--background);
             margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease 0.2s forwards;
         }
 
         .hero-buttons {
@@ -190,45 +261,78 @@
         }
 
         .hero-stats {
-            display: flex;
-            gap: 2rem;
-        }
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex-wrap: wrap;
+}
 
         .stat {
             text-align: center;
+            transition: transform 0.3s;
+            padding: 1rem;
+            border-radius: 1rem;
+            color: var(--background);
+        }
+
+        .stat:hover {
+            transform: scale(1.1);
+            background: var(--background);
+            color: var(--primary);
         }
 
         .stat-number {
-            font-size: 1.5rem;
-            font-weight: 500;
-            color: var(--gray-900);
+            font-size: 2rem;
+            font-weight: 600;
         }
 
         .stat-label {
             font-size: 0.875rem;
-            color: var(--gray-600);
+            color: var(--background);
+        }
+
+        .stat:hover .stat-label {
+            color: var(--primary);
         }
 
         .hero-image {
             position: relative;
+            display: none;
         }
 
         .hero-img {
             width: 100%;
             height: 600px;
             object-fit: cover;
-            border-radius: 1rem;
+            border-radius: 1.5rem;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transition: transform 0.5s ease;
+            border: 4px solid var(--primary-light);
+        }
+
+        .hero-img:hover {
+            transform: scale(1.02);
         }
 
         .hero-badge {
             position: absolute;
             bottom: -1.5rem;
             left: -1.5rem;
-            background: white;
+            background: var(--card-bg);
             padding: 1.5rem;
-            border-radius: 0.75rem;
+            border-radius: 1rem;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            animation: float 3s ease-in-out infinite;
+            border: 3px solid var(--primary-light);
+            transition: all 0.3s;
+        }
+
+        .hero-badge:hover {
+            background: var(--primary);
+            color: var(--background);
+            transform: scale(1.05);
         }
 
         .hero-badge-content {
@@ -240,107 +344,215 @@
         .hero-badge-icon {
             width: 3rem;
             height: 3rem;
-            background: var(--green-100);
+            background: var(--primary);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--green-600);
+            color: var(--background);
+            transition: all 0.3s;
         }
 
-        /* Quiz Section Styles */
+        .hero-badge:hover .hero-badge-icon {
+            background: var(--background);
+            color: var(--primary);
+        }
+
+        
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Custom Icons */
+        .icon-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .custom-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            background: var(--primary);
+            color: var(--background);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .package-icon {
+            font-size: 2.5rem;
+        }
+
+        .education-icon {
+            font-size: 2rem;
+        }
+
+        .info-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Gold Package Icon */
+        .gold-icon {
+            background: linear-gradient(135deg, #333333, #000000);
+            color: var(--background);
+        }
+
+        /* Diamond Package Icon */
+        .diamond-icon {
+            background: linear-gradient(135deg, #666666, #333333);
+            color: var(--background);
+        }
+
+        /* VIP Package Icon */
+        .vip-icon {
+            background: linear-gradient(135deg, #000000, #333333);
+            color: var(--background);
+        }
+
+        /* Education Icons */
+        .education-icon-1 {
+            background: linear-gradient(135deg, #333333, #666666);
+            color: var(--background);
+        }
+
+        .education-icon-2 {
+            background: linear-gradient(135deg, #000000, #333333);
+            color: var(--background);
+        }
+
+        .education-icon-3 {
+            background: linear-gradient(135deg, #666666, #333333);
+            color: var(--background);
+        }
+
+        .education-icon-4 {
+            background: linear-gradient(135deg, #333333, #000000);
+            color: var(--background);
+        }
+
+        .education-icon-5 {
+            background: linear-gradient(135deg, #000000, #666666);
+            color: var(--background);
+        }
+
+        .education-icon-6 {
+            background: linear-gradient(135deg, #666666, #000000);
+            color: var(--background);
+        }
+
+        /* Info Icons */
+        .info-icon-1 {
+            background: linear-gradient(135deg, #333333, #000000);
+            color: var(--background);
+        }
+
+        .info-icon-2 {
+            background: linear-gradient(135deg, #000000, #333333);
+            color: var(--background);
+        }
+
+        .info-icon-3 {
+            background: linear-gradient(135deg, #666666, #333333);
+            color: var(--background);
+        }
+
+        /* LIVO Section */
+        .livo-section {
+            padding: 5rem 0;
+            background: var(--secondary);
+        }
+
+        .livo-grid {
+            display: grid;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .livo-card {
+            background: var(--card-bg);
+            border: 3px solid var(--primary-light);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .livo-card:hover {
+            transform: translateY(-10px);
+            background: var(--primary);
+            color: var(--background);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .livo-card:hover .custom-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .livo-letter {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+
+        .livo-card:hover .livo-letter {
+            color: var(--background);
+        }
+
+        .livo-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+
+        .livo-card:hover .livo-title {
+            color: var(--background);
+        }
+
+        .livo-quote {
+            font-size: 1.125rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            transition: all 0.3s;
+        }
+
+        .livo-card:hover .livo-quote {
+            color: var(--secondary);
+        }
+
+        .livo-description {
+            color: var(--foreground);
+            transition: all 0.3s;
+        }
+
+        .livo-card:hover .livo-description {
+            color: var(--background);
+        }
+
+        /* Quiz Section */
         .quiz-section {
             padding: 5rem 0;
-            background: var(--gray-50);
-        }
-        
-        .quiz-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-        
-        .quiz-step {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .quiz-step.active {
-            display: block;
-        }
-        
-        .quiz-question {
-            font-size: 1.8rem;
-            margin-bottom: 2rem;
-            text-align: center;
-            font-weight: 500;
-            color: var(--gray-900);
-        }
-        
-        .quiz-options {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        
-        .quiz-option {
-            padding: 1rem 1.5rem;
-            border: 1px solid var(--gray-300);
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            background: white;
-        }
-        
-        .quiz-option:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        
-        .quiz-option.selected {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-        
-        .quiz-nav {
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .quiz-result {
-            text-align: center;
-            display: none;
-            padding: 2rem;
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-        
-        .quiz-result h3 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--gray-900);
-        }
-        
-        .quiz-result p {
-            margin-bottom: 2rem;
-            font-size: 1.125rem;
-            color: var(--gray-600);
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Packages Section */
-        .packages {
-            padding: 5rem 0;
-            background: white;
+            background: var(--secondary);
         }
 
         .section-header {
@@ -350,35 +562,173 @@
 
         .section-title {
             font-size: 2.5rem;
-            font-weight: 500;
-            color: var(--gray-900);
+            font-weight: 600;
             margin-bottom: 1rem;
+            color: var(--primary);
         }
 
         .section-description {
-            font-size: 1.25rem;
-            color: var(--gray-600);
+            font-size: 1.125rem;
+            color: var(--foreground);
             max-width: 42rem;
             margin: 0 auto;
+        }
+
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            
+        }
+
+        .quiz-step {
+            display: none;
+            background: var(--card-bg);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border: 4px solid var(--primary-light);
+        }
+
+        .quiz-step.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .quiz-progress {
+            margin-bottom: 2rem;
+        }
+
+        .quiz-progress-bar {
+            height: 8px;
+            background: #E5E7EB;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .quiz-progress-fill {
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.5s ease;
+            border-radius: 1rem;
+        }
+
+        .quiz-question {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-option {
+            padding: 1.5rem;
+            border: 3px solid #E5E7EB;
+            border-radius: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            background: var(--card-bg);
+        }
+
+        .quiz-option:hover {
+            border-color: var(--primary);
+            transform: translateX(10px);
+            background: var(--primary);
+            color: var(--background);
+        }
+
+        .quiz-option.selected {
+            background: var(--primary);
+            color: var(--background);
+            border-color: var(--primary);
+            transform: scale(1.02);
+        }
+
+        .quiz-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .quiz-result {
+            display: none;
+            text-align: center;
+            background: var(--card-bg);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border: 4px solid var(--primary-light);
+        }
+
+        .quiz-result.active {
+            display: block;
+            animation: zoomIn 0.5s ease;
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .quiz-result h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .quiz-result p {
+            margin-bottom: 2rem;
+            font-size: 1.125rem;
+            color: var(--foreground);
+        }
+
+        /* Packages Section */
+        .packages {
+            padding: 5rem 0;
+            background: var(--background);
         }
 
         .packages-grid {
             display: grid;
             gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .package-card {
-            background: white;
-            border: 1px solid var(--gray-200);
-            border-radius: var(--border-radius);
+            background: var(--card-bg);
+            border: 4px solid var(--primary-light);
+            border-radius: 1.5rem;
             padding: 2rem;
             position: relative;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
         }
 
         .package-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .package-card:hover .custom-icon {
+            transform: scale(1.1) rotate(10deg);
         }
 
         .package-popular {
@@ -388,32 +738,29 @@
 
         .popular-badge {
             position: absolute;
-            top: -0.75rem;
+            top: -1rem;
             left: 50%;
             transform: translateX(-50%);
             background: var(--primary);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
+            color: var(--background);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
             font-size: 0.875rem;
+            animation: pulse 2s infinite;
         }
 
         .package-title {
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
+            text-align: center;
+            color: var(--primary);
         }
 
         .package-description {
-            color: var(--gray-600);
+            color: var(--foreground);
             margin-bottom: 1.5rem;
-        }
-
-        .package-price-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            text-align: center;
         }
 
         .package-price-option {
@@ -421,77 +768,79 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem;
-            border: 1px solid var(--gray-200);
-            border-radius: var(--border-radius);
+            border: 2px solid #E5E7EB;
+            border-radius: 0.75rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
             transition: all 0.3s;
         }
 
         .package-price-option:hover {
             border-color: var(--primary);
-            background: var(--gray-50);
-            border: 5px solid black;
+            background: var(--primary);
+            color: var(--background);
+            transform: translateX(10px);
         }
 
         .package-price-option.selected {
             border-color: var(--primary);
-            background: var(--gray-50);
-            border: 5px solid black;
-        }
-
-        .price-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .price-label {
-            font-size: 0.875rem;
-            color: var(--gray-600);
-            margin-bottom: 0.25rem;
+            background: var(--primary);
+            color: var(--background);
+            transform: scale(1.02);
         }
 
         .price {
             font-size: 1.5rem;
-            font-weight: 500;
-            color: var(--primary);
+            font-weight: 600;
         }
 
-        .price-original {
-            font-size: 1rem;
-            color: var(--gray-400);
-            text-decoration: line-through;
-        }
-
-        .package-meta {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+        .price-label {
             font-size: 0.875rem;
-            color: var(--gray-600);
+            opacity: 0.8;
         }
 
         .package-features {
             list-style: none;
-            margin-bottom: 2rem;
+            margin: 1.5rem 0;
         }
 
         .package-features li {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
             margin-bottom: 0.75rem;
-            font-size: 0.875rem;
-            color: var(--gray-700);
+            transition: all 0.3s;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+        }
+
+        .package-features li:hover {
+            transform: translateX(10px);
+            background: var(--primary);
+            color: var(--background);
         }
 
         .check-icon {
-            color: var(--green-600);
-            font-weight: bold;
+            width: 1.25rem;
+            height: 1.25rem;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--background);
+            flex-shrink: 0;
+        }
+
+        .package-features li:hover .check-icon {
+            background: var(--background);
+            color: var(--primary);
         }
 
         /* About Section */
         .about {
             padding: 5rem 0;
-            background: var(--gray-50);
+            background: var(--secondary);
         }
 
         .about-content {
@@ -500,25 +849,41 @@
             align-items: center;
         }
 
+        .about-image-wrapper {
+            position: relative;
+        }
+
         .about-image {
             width: 100%;
             height: 500px;
             object-fit: cover;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border: 4px solid var(--primary-light);
+            transition: transform 0.5s ease;
+        }
+
+        .about-image:hover {
+            transform: scale(1.02);
+        }
+
+        .about-floating-badge {
+            position: absolute;
+            bottom: -1.5rem;
+            right: -1.5rem;
+            background: var(--primary);
+            color: var(--background);
+            padding: 1.5rem;
             border-radius: 1rem;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
         }
 
-        .about-text h2 {
-            font-size: 2.5rem;
-            font-weight: 500;
-            color: var(--gray-900);
-            margin-bottom: 1.5rem;
-        }
-
-        .about-text p {
-            font-size: 1.125rem;
-            color: var(--gray-600);
-            margin-bottom: 1.5rem;
+        .about-floating-badge:hover {
+            background: var(--background);
+            color: var(--primary);
+            border: 3px solid var(--primary);
+            transform: scale(1.05);
         }
 
         .about-grid {
@@ -528,25 +893,136 @@
             margin-top: 2rem;
         }
 
-        .about-grid h4 {
-            font-weight: 500;
-            color: var(--gray-900);
+        .about-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 3px solid var(--primary-light);
+            transition: all 0.3s;
+        }
+
+        .about-card:hover {
+            background: var(--primary);
+            color: var(--background);
+            transform: scale(1.05);
+        }
+
+        .about-card h4 {
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .about-card ul {
+            list-style: none;
+        }
+
+        .about-card li {
+            margin-bottom: 0.5rem;
+            transition: transform 0.3s;
+            padding: 0.25rem;
+            border-radius: 0.25rem;
+        }
+
+        .about-card li:hover {
+            transform: translateX(10px);
+            background: var(--background);
+            color: var(--primary);
+        }
+
+        /* Education Section */
+        .education {
+            padding: 5rem 0;
+            background: var(--background);
+        }
+
+        .education-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .education-card {
+            background: var(--card-bg);
+            border: 3px solid var(--primary-light);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .education-card:hover {
+            transform: translateY(-5px) translateX(10px);
+            background: var(--primary);
+            color: var(--background);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .education-card:hover .custom-icon {
+            transform: scale(1.2) rotate(360deg);
+        }
+
+        .education-content h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
             margin-bottom: 0.5rem;
         }
 
-        .about-grid ul {
-            list-style: none;
-            color: var(--gray-600);
+        .education-content p {
+            color: var(--foreground);
         }
 
-        .about-grid li {
-            margin-bottom: 0.25rem;
+        .education-card:hover .education-content p {
+            color: var(--background);
+        }
+
+        /* Pilates Info Section */
+        .pilates-about {
+            padding: 5rem 0;
+            background: var(--secondary);
+        }
+
+        .pilates-cards {
+            display: grid;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pilates-card {
+            background: var(--card-bg);
+            border: 4px solid var(--primary-light);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pilates-card:hover {
+            transform: translateY(-10px);
+            background: var(--primary);
+            color: var(--background);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .pilates-card:hover .custom-icon {
+            transform: scale(1.2) rotate(360deg);
+        }
+
+        .pilates-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
         }
 
         /* Testimonials */
         .testimonials {
             padding: 5rem 0;
-            background: white;
+            background: var(--background);
         }
 
         .testimonials-grid {
@@ -555,10 +1031,18 @@
         }
 
         .testimonial-card {
-            background: white;
-            border: 1px solid var(--gray-200);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
+            background: var(--card-bg);
+            border: 3px solid var(--primary-light);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            background: var(--primary);
+            color: var(--background);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
 
         .testimonial-stars {
@@ -568,14 +1052,24 @@
         }
 
         .star {
-            color: var(--yellow-400);
+            color: var(--primary);
             font-size: 1.25rem;
+            transition: transform 0.3s;
+        }
+
+        .testimonial-card:hover .star {
+            color: var(--background);
+            transform: rotate(360deg);
         }
 
         .testimonial-text {
-            color: var(--gray-700);
+            color: var(--foreground);
             margin-bottom: 1.5rem;
             font-style: italic;
+        }
+
+        .testimonial-card:hover .testimonial-text {
+            color: var(--background);
         }
 
         .testimonial-author {
@@ -589,107 +1083,33 @@
             height: 3rem;
             border-radius: 50%;
             object-fit: cover;
+            border: 2px solid var(--primary-light);
+            transition: transform 0.3s;
+        }
+
+        .testimonial-card:hover .testimonial-avatar {
+            border-color: var(--background);
+            transform: scale(1.1);
         }
 
         .testimonial-info h4 {
-            font-weight: 500;
-            color: var(--gray-900);
+            font-weight: 600;
         }
 
         .testimonial-info p {
             font-size: 0.875rem;
-            color: var(--gray-600);
+            color: var(--foreground);
         }
 
-        /* Pilates About Section */
-        .pilates-about {
-            padding: 5rem 0;
-            background: var(--gray-50);
-        }
-
-        .pilates-cards {
-            display: grid;
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .pilates-card {
-            background: white;
-            border: 1px solid var(--gray-200);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .pilates-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-
-        .pilates-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        .pilates-card h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--gray-900);
-        }
-
-        .pilates-card p {
-            color: var(--gray-600);
-            line-height: 1.6;
-        }
-
-        /* Education Section */
-        .education {
-            padding: 5rem 0;
-            background: white;
-        }
-
-        .education-grid {
-            display: grid;
-            gap: 1.5rem;
-            margin-top: 3rem;
-        }
-
-        .education-card {
-            background: white;
-            border: 1px solid var(--gray-200);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-
-        .education-icon {
-            font-size: 1.5rem;
-            color: var(--primary);
-            flex-shrink: 0;
-        }
-
-        .education-content h3 {
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--gray-900);
-        }
-
-        .education-content p {
-            color: var(--gray-600);
-            line-height: 1.6;
+        .testimonial-card:hover .testimonial-info p {
+            color: var(--background);
         }
 
         /* Contact Section */
         .contact {
             padding: 5rem 0;
             background: var(--primary);
-            color: white;
+            color: var(--background);
         }
 
         .contact-content {
@@ -699,13 +1119,13 @@
 
         .contact h2 {
             font-size: 2.5rem;
-            font-weight: 500;
+            font-weight: 600;
             margin-bottom: 1.5rem;
         }
 
         .contact p {
             font-size: 1.25rem;
-            opacity: 0.8;
+            opacity: 0.9;
             margin-bottom: 2rem;
         }
 
@@ -716,20 +1136,30 @@
         .contact-info li {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 1rem;
             margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            transition: all 0.3s;
+        }
+
+        .contact-info li:hover {
+            background: var(--background);
+            color: var(--primary);
+            transform: translateX(10px);
         }
 
         .contact-form {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border-radius: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 1.5rem;
             padding: 2rem;
         }
 
         .contact-form h3 {
             font-size: 1.5rem;
-            font-weight: 500;
+            font-weight: 600;
             margin-bottom: 1.5rem;
         }
 
@@ -740,32 +1170,36 @@
         }
 
         .btn-secondary {
-            background: white;
+            background: var(--background);
             color: var(--primary);
+            border: 2px solid var(--background);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: var(--background);
+            border-color: var(--background);
         }
 
         .btn-white-outline {
             background: transparent;
-            color: white;
-            border: 1px solid white;
+            color: var(--background);
+            border: 2px solid var(--background);
         }
 
         .btn-white-outline:hover {
-            background: white;
+            background: var(--background);
             color: var(--primary);
         }
-
-        .contact-guarantee {
-            font-size: 0.875rem;
-            opacity: 0.8;
-            text-align: center;
-            margin-top: 1.5rem;
+        
+        .btn {
+            
+            border: px solid black;
         }
-
         /* Footer */
         .footer {
-            background: rgb(54, 54, 54);
-            color: white;
+            background: var(--primary);
+            color: var(--background);
             padding: 3rem 0;
         }
 
@@ -776,37 +1210,19 @@
         }
 
         .footer-brand {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
             margin-bottom: 1rem;
         }
 
-        .footer-logo {
-            width: 12rem;
-            height: 3rem;
-            background: transparent;
-            border-radius: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-
-        .footer-title {
-            font-size: 1.25rem;
-            font-weight: 500;
-        }
-
         .footer-description {
-            color: var(--gray-400);
+            color: var(--accent);
             line-height: 1.6;
+            margin-bottom: 1rem;
         }
 
         .footer-section h4 {
-            font-weight: 500;
+            font-weight: 600;
             margin-bottom: 1rem;
             font-size: 1.125rem;
         }
@@ -820,46 +1236,146 @@
         }
 
         .footer-section a {
-            color: var(--gray-400);
+            color: var(--accent);
             text-decoration: none;
-            transition: color 0.3s;
+            transition: all 0.3s;
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
         }
 
         .footer-section a:hover {
-            color: white;
+            color: var(--primary);
+            background: var(--background);
+            transform: translateX(10px);
         }
 
         .footer-bottom {
-            border-top: 1px solid var(--gray-800);
+            border-top: 1px solid var(--primary-light);
             padding-top: 2rem;
             text-align: center;
-            color: var(--gray-400);
+            color: var(--accent);
             font-size: 0.875rem;
         }
 
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .social-link {
+        .instagram-btn {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-light);
+            color: var(--background);
+            border-radius: 0.75rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .instagram-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            background: var(--background);
+            color: var(--primary);
+        }
+
+        /* Instagram Float */
+        .instagram-float {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 999;
+        }
+
+        .instagram-float-btn {
+            width: 4rem;
+            height: 4rem;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+            background: var(--primary-light);
+            border: none;
+            color: var(--background);
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            animation: float 3s ease-in-out infinite;
         }
 
-        .social-link:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+        .instagram-float-btn:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            background: var(--primary);
         }
 
-        /* Payment Modal Styles */
+        .instagram-popup {
+            position: absolute;
+            bottom: 5rem;
+            right: 0;
+            background: var(--card-bg);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            width: 300px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 3px solid var(--primary-light);
+            display: none;
+            animation: slideUp 0.3s ease;
+        }
+
+        .instagram-popup.active {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .instagram-popup h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .instagram-popup p {
+            color: var(--foreground);
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+        }
+
+        .instagram-popup .instagram-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--foreground);
+            transition: all 0.3s;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-popup:hover {
+            background: var(--primary);
+            color: var(--background);
+            transform: rotate(90deg);
+        }
+
+        /* Payment Modal */
         .payment-modal {
             display: none;
             position: fixed;
@@ -867,72 +1383,154 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
             align-items: center;
             justify-content: center;
+            animation: fadeIn 0.3s ease;
         }
-        
+
         .payment-modal.active {
             display: flex;
         }
-        
+
         .payment-content {
-            background: white;
+            background: var(--card-bg);
             padding: 2rem;
-            border-radius: var(--border-radius);
+            border-radius: 1.5rem;
             max-width: 500px;
             width: 90%;
             max-height: 90vh;
             overflow-y: auto;
+            animation: zoomIn 0.3s ease;
+            border: 4px solid var(--primary-light);
         }
-        
+
         .payment-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
         }
-        
+
         .close-modal {
             background: none;
             border: none;
-            font-size: 1.5rem;
+            font-size: 2rem;
             cursor: pointer;
-            color: var(--gray-600);
+            color: var(--foreground);
+            transition: all 0.3s;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
         }
-        
+
+        .close-modal:hover {
+            background: var(--primary);
+            color: var(--background);
+            transform: rotate(90deg);
+        }
+
         .payment-options {
             display: flex;
             flex-direction: column;
             gap: 1rem;
-            margin-bottom: 1.5rem;
+            margin: 1.5rem 0;
         }
-        
+
         .payment-option {
-            padding: 1rem;
-            border: 1px solid var(--gray-300);
-            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            border: 3px solid #E5E7EB;
+            border-radius: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .payment-option:hover {
             border-color: var(--primary);
-        }
-        
-        .payment-option.selected {
-            border-color: var(--primary);
-            background: var(--gray-50);
-        }
-        
-        .payment-details {
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--gray-200);
+            background: var(--primary);
+            color: var(--background);
+            transform: translateX(10px);
         }
 
-        /* Responsive Design */
+        .payment-option.selected {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: var(--background);
+        }
+
+        .payment-option h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-option p {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        /* Quiz geri tuşu için özel class */
+        .quiz-back-btn {
+            color: var(--primary);
+            background: var(--background);
+            border: 2px solid var(--primary);
+        }
+
+        .quiz-back-btn:hover {
+            background: var(--primary);
+            color: var(--background);
+        }
+
+        /* Quiz "Size Uygun Paketi Bulun" butonu için özel class */
+        .quiz-find-package-btn {
+            color: var(--background);
+            background: transparent;
+            border: 2px solid var(--background);
+        }
+
+        .quiz-find-package-btn:hover {
+            background: var(--background);
+            color: var(--primary);
+        }
+
+        /* Email hover düzeltmesi */
+        .contact-info li a {
+            color: var(--background);
+            text-decoration: none;
+        }
+
+        .contact-info li:hover a {
+            color: var(--primary);
+        }
+
+        /* Hero section düzeni */
+        .hero-content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info li:hover a {
+    color: var(--primary) !important;
+}
+
+.contact-info li:hover div {
+    color: var(--primary) !important;
+}
+
+.contact-info li:hover div[style*="opacity: 0.8"] {
+    opacity: 1 !important;
+}
+
+        @media (min-width: 1024px) {
+            .hero-content-wrapper {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Responsive */
         @media (min-width: 640px) {
             .hero-buttons {
                 flex-direction: row;
@@ -943,6 +1541,10 @@
             }
 
             .pilates-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .livo-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
 
@@ -962,6 +1564,10 @@
 
             .education-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+
+            .livo-grid {
+                grid-template-columns: repeat(3, 1fr);
             }
 
             .footer-content {
@@ -996,57 +1602,59 @@
 
             .footer-content {
                 grid-template-columns: repeat(4, 1fr);
-                gap: 3rem;
             }
-        }
-
-        .icon {
-            width: 1.25rem;
-            height: 1.25rem;
-            display: inline-block;
         }
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="loader"></div>
+    </div>
+
     <!-- Navigation -->
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <div class="nav-content">
-            <div class="nav-brand">
-                <div class="nav-logo">
-                    <img src="livolab.png" alt="Logo" style="width: 100%; height: 100%; object-fit: contain;">
-                </div>
-            </div>
+            <div class="nav-brand" onclick="scrollToSection('#home')">LivoLab</div>
             <div class="nav-links">
-                <a href="#home">Ana Sayfa</a>
-                <a href="#packages">Paketler</a>
-                <a href="#about">Hakkımda</a>
-                <a href="#pilates">Pilates</a>
-                <a href="#education">Eğitimler</a>
-                <a href="#contact">İletişim</a>
+                <a href="#home" onclick="scrollToSection('#home')">Ana Sayfa</a>
+                <a href="#packages" onclick="scrollToSection('#packages')">Paketler</a>
+                <a href="#about" onclick="scrollToSection('#about')">Hakkımda</a>
+                <a href="#education" onclick="scrollToSection('#education')">Eğitimler</a>
+                <a href="#pilates" onclick="scrollToSection('#pilates')">Pilates</a>
+                <a href="#livo" onclick="scrollToSection('#livo')">LIVO</a>
+                <a href="#contact" onclick="scrollToSection('#contact')">İletişim</a>
             </div>
-            <a href="#packages" class="btn btn-primary">Hemen Başla</a>
+            <button class="btn btn-primary" onclick="scrollToSection('#packages')">Hemen Başla</button>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="container">
-            <div class="hero-content">
+            <div class="hero-content-wrapper">
                 <div>
-                    <span class="badge">Sertifikalı Pilates Eğitmeni</span>
+                    <span class="badge">Sertifikalı Eğitmen / TCF & Balanced Body</span>
                     <h1 class="hero-title">
-                        Vücudunuzu
-                        <span class="text-primary">Online Pilates ile Dönüştürün</span>
+                        Vücudunuzu<br>
+                        <span style="position: relative; display: inline-block;">
+                            Online Pilates
+                        </span><br>
+                        ile Dönüştürün
                     </h1>
                     <p class="hero-description">
                         Uzmanlıkla hazırlanmış online Pilates programlarımla binlerce öğrenciye güç, esneklik ve farkındalık kazandırdım.
                     </p>
                     <div class="hero-buttons">
-                        <a href="#packages" class="btn btn-primary btn-lg">
+                        <button class="btn btn-primary" onclick="scrollToSection('#packages')">
                             ▶ Yolculuğunuza Başlayın
-                        </a>
-                        <a href="#quiz" class="btn btn-outline btn-lg">Size Uygun Paketi Bulun</a>
+                        </button>
+                        <button class="btn quiz-find-package-btn" onclick="scrollToSection('#quiz')">
+                            Size Uygun Paketi Bulun
+                        </button>
                     </div>
+                </div>
+                <div>
                     <div class="hero-stats">
                         <div class="stat">
                             <div class="stat-number">500+</div>
@@ -1059,18 +1667,6 @@
                         <div class="stat">
                             <div class="stat-number">4.9</div>
                             <div class="stat-label">Ortalama Puan</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=700&fit=crop" alt="Hacer Zorlu Pilates dersi verirken" class="hero-img">
-                    <div class="hero-badge">
-                        <div class="hero-badge-content">
-                            <div class="hero-badge-icon">✓</div>
-                            <div>
-                                <div style="font-weight: 500;">Sertifikalı Eğitmen</div>
-                                <div style="font-size: 0.875rem; color: var(--gray-600);">TCF & Balanced Body</div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -1087,84 +1683,130 @@
                     Kısa testimizi tamamlayın ve ihtiyaçlarınıza en uygun pilates paketini keşfedin.
                 </p>
             </div>
-            
+
             <div class="quiz-container">
-                <div class="quiz-steps">
-                    <!-- Step 1 -->
-                    <div class="quiz-step active" data-step="1">
-                        <h3 class="quiz-question">Pilates deneyiminiz var mı?</h3>
-                        <div class="quiz-options">
-                            <div class="quiz-option" data-value="beginner">Hayır, yeni başlıyorum</div>
-                            <div class="quiz-option" data-value="intermediate">Biraz deneyimim var</div>
-                            <div class="quiz-option" data-value="advanced">Düzenli olarak pilates yapıyorum</div>
+                <!-- Step 1 -->
+                <div class="quiz-step active" data-step="1">
+                    <div class="quiz-progress">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.875rem;">
+                            <span>Adım <span class="current-step">1</span> / 5</span>
+                            <span><span class="progress-percent">20</span>%</span>
                         </div>
-                        <div class="quiz-nav">
-                            <button class="btn btn-outline" disabled>Geri</button>
-                            <button class="btn btn-primary quiz-next">İleri</button>
+                        <div class="quiz-progress-bar">
+                            <div class="quiz-progress-fill" style="width: 20%"></div>
                         </div>
                     </div>
-                    
-                    <!-- Step 2 -->
-                    <div class="quiz-step" data-step="2">
-                        <h3 class="quiz-question">Haftada kaç gün antrenman yapmayı planlıyorsunuz?</h3>
-                        <div class="quiz-options">
-                            <div class="quiz-option" data-value="1-2">2 gün</div>
-                            <div class="quiz-option" data-value="3">3 gün</div>
-                            
+                    <h3 class="quiz-question">Pilates deneyiminiz var mı?</h3>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-value="beginner">Hayır, yeni başlıyorum</div>
+                        <div class="quiz-option" data-value="intermediate">Biraz deneyimim var</div>
+                        <div class="quiz-option" data-value="advanced">Düzenli olarak pilates yapıyorum</div>
+                    </div>
+                    <div class="quiz-nav">
+                        <button class="btn quiz-back-btn" disabled>Geri</button>
+                        <button class="btn btn-primary quiz-next">İleri</button>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="quiz-step" data-step="2">
+                    <div class="quiz-progress">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.875rem;">
+                            <span>Adım <span class="current-step">2</span> / 5</span>
+                            <span><span class="progress-percent">40</span>%</span>
                         </div>
-                        <div class="quiz-nav">
-                            <button class="btn btn-outline quiz-prev">Geri</button>
-                            <button class="btn btn-primary quiz-next">İleri</button>
+                        <div class="quiz-progress-bar">
+                            <div class="quiz-progress-fill" style="width: 40%"></div>
                         </div>
                     </div>
-                    
-                    <!-- Step 3 -->
-                    <div class="quiz-step" data-step="3">
-                        <h3 class="quiz-question">Herhangi bir omurga rahatsızlığınız var mı?</h3>
-                        <div class="quiz-options">
-                            <div class="quiz-option" data-value="yes">Evet</div>
-                            <div class="quiz-option" data-value="no">Hayır</div>
+                    <h3 class="quiz-question">Haftada kaç gün antrenman yapmayı planlıyorsunuz?</h3>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-value="1-2">2 gün</div>
+                        <div class="quiz-option" data-value="3">3 gün</div>
+                    </div>
+                    <div class="quiz-nav">
+                        <button class="btn quiz-back-btn quiz-prev">Geri</button>
+                        <button class="btn btn-primary quiz-next">İleri</button>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="quiz-step" data-step="3">
+                    <div class="quiz-progress">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.875rem;">
+                            <span>Adım <span class="current-step">3</span> / 5</span>
+                            <span><span class="progress-percent">60</span>%</span>
                         </div>
-                        <div class="quiz-nav">
-                            <button class="btn btn-outline quiz-prev">Geri</button>
-                            <button class="btn btn-primary quiz-next">İleri</button>
+                        <div class="quiz-progress-bar">
+                            <div class="quiz-progress-fill" style="width: 60%"></div>
                         </div>
                     </div>
-                    
-                    <!-- Step 4 -->
-                    <div class="quiz-step" data-step="4">
-                        <h3 class="quiz-question">Hangi tür antrenmanı tercih edersiniz?</h3>
-                        <div class="quiz-options">
-                            <div class="quiz-option" data-value="group">Grup dersleri</div>
-                            <div class="quiz-option" data-value="personal">Bire bir özel ders</div>
-                            <div class="quiz-option" data-value="mixed">Karışık (hem grup hem özel)</div>
+                    <h3 class="quiz-question">Herhangi bir omurga rahatsızlığınız var mı?</h3>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-value="yes">Evet</div>
+                        <div class="quiz-option" data-value="no">Hayır</div>
+                    </div>
+                    <div class="quiz-nav">
+                        <button class="btn quiz-back-btn quiz-prev">Geri</button>
+                        <button class="btn btn-primary quiz-next">İleri</button>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="quiz-step" data-step="4">
+                    <div class="quiz-progress">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.875rem;">
+                            <span>Adım <span class="current-step">4</span> / 5</span>
+                            <span><span class="progress-percent">80</span>%</span>
                         </div>
-                        <div class="quiz-nav">
-                            <button class="btn btn-outline quiz-prev">Geri</button>
-                            <button class="btn btn-primary quiz-next">İleri</button>
+                        <div class="quiz-progress-bar">
+                            <div class="quiz-progress-fill" style="width: 80%"></div>
                         </div>
                     </div>
-                    
-                    <!-- Step 5 -->
-                    <div class="quiz-step" data-step="5">
-                        <h3 class="quiz-question">Hedefleriniz neler?</h3>
-                        <div class="quiz-options">
-                            <div class="quiz-option" data-value="health">Genel sağlık ve esneklik</div>
-                            <div class="quiz-option" data-value="posture">Duruş bozukluklarını düzeltme</div>
-                            <div class="quiz-option" data-value="fitness">Fitness ve güçlenme</div>
+                    <h3 class="quiz-question">Hangi tür antrenmanı tercih edersiniz?</h3>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-value="group">Grup dersleri</div>
+                        <div class="quiz-option" data-value="personal">Bire bir özel ders</div>
+                        <div class="quiz-option" data-value="mixed">Karışık (hem grup hem özel)</div>
+                    </div>
+                    <div class="quiz-nav">
+                        <button class="btn quiz-back-btn quiz-prev">Geri</button>
+                        <button class="btn btn-primary quiz-next">İleri</button>
+                    </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="quiz-step" data-step="5">
+                    <div class="quiz-progress">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.875rem;">
+                            <span>Adım <span class="current-step">5</span> / 5</span>
+                            <span><span class="progress-percent">100</span>%</span>
                         </div>
-                        <div class="quiz-nav">
-                            <button class="btn btn-outline quiz-prev">Geri</button>
-                            <button class="btn btn-primary quiz-submit">Sonucu Gör</button>
+                        <div class="quiz-progress-bar">
+                            <div class="quiz-progress-fill" style="width: 100%"></div>
                         </div>
                     </div>
-                    
-                    <!-- Result -->
-                    <div class="quiz-result">
-                        <h3>Sizin İçin En Uygun Paket</h3>
-                        <p class="result-text"></p>
-                        <button class="btn btn-primary go-to-package">Paketi Görüntüle</button>
-                        <button class="btn btn-outline quiz-restart" style="margin-top: 20px;">Testi Tekrarla</button>
+                    <h3 class="quiz-question">Hedefleriniz neler?</h3>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-value="health">Genel sağlık ve esneklik</div>
+                        <div class="quiz-option" data-value="posture">Duruş bozukluklarını düzeltme</div>
+                        <div class="quiz-option" data-value="fitness">Fitness ve güçlenme</div>
+                    </div>
+                    <div class="quiz-nav">
+                        <button class="btn quiz-back-btn quiz-prev">Geri</button>
+                        <button class="btn btn-primary quiz-submit">Sonucu Gör</button>
+                    </div>
+                </div>
+
+                <!-- Result -->
+                <div class="quiz-result">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div>
+                    <h3>Sizin İçin En Uygun Paket</h3>
+                    <div style="font-size: 3rem; margin: 1rem 0;"><span class="result-package">GOLD</span> Paket</div>
+                    <p class="result-text"></p>
+                    <div style="display: flex; flex-direction: column; gap: 1rem; max-width: 400px; margin: 0 auto;">
+                        <button class="btn btn-primary" onclick="goToPackage()">Paketi Görüntüle</button>
+                        <button class="btn quiz-back-btn quiz-restart">Testi Tekrarla</button>
                     </div>
                 </div>
             </div>
@@ -1177,53 +1819,20 @@
             <div class="section-header">
                 <h2 class="section-title">Online Pilates Paketleri</h2>
                 <p class="section-description">
-                    Fitness seviyenize ve hedeflerinize uygun mükemmel programı seçin. Tüm paketler ömür boyu erişim ve uzman rehberlik içerir.
+                    Fitness seviyenize ve hedeflerinize uygun mükemmel programı seçin.
                 </p>
             </div>
-            
+
             <div class="packages-grid">
                 <!-- GOLD Package -->
                 <div class="package-card" id="gold-package">
-                    <h3 class="package-title">GOLD Paket 🏅</h3>
+                    <div class="icon-container">
+                        <div class="custom-icon gold-icon package-icon">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                    </div>
+                    <h3 class="package-title">GOLD Paket</h3>
                     <p class="package-description">"Tüm seviyeler için uygun" - Eğitmenle her seviye için uygun canlı online grup ders.</p>
-                    
-                    <div class="package-price-container">
-                        <div class="package-price-option" data-price="3045">
-                            <div class="price-info">
-                                <div class="price-label">1 aylık toplam 12 ders</div>
-                                <div class="price">3.045₺</div>
-                            </div>
-                        </div>
-                        <div class="package-price-option" data-price="4620">
-                            <div class="price-info">
-                                <div class="price-label">2 aylık toplam 24 ders</div>
-                                <div class="price">4.620₺</div>
-                            </div>
-                        </div>
-                        <div class="package-price-option" data-price="6510">
-                            <div class="price-info">
-                                <div class="price-label">3 aylık toplam 36 ders</div>
-                                <div class="price">6.510₺</div>
-                            </div>
-                        </div>
-                        <div class="package-price-option" data-price="685">
-                            <div class="price-info">
-                                <div class="price-label">1 haftalık katılım</div>
-                                <div class="price">685₺</div>
-                            </div>
-                        </div>
-                        <div class="package-price-option" data-price="240">
-                            <div class="price-info">
-                                <div class="price-label">Tek derslik katılım</div>
-                                <div class="price">240₺</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="package-meta">
-                        <span>📅 4 hafta</span>
-                        <span>👥 12 ders</span>
-                    </div>
                     <ul class="package-features">
                         <li><span class="check-icon">✓</span> Canlı online grup dersleri</li>
                         <li><span class="check-icon">✓</span> Haftada 2 mat pilates + 1 cardio</li>
@@ -1231,34 +1840,54 @@
                         <li><span class="check-icon">✓</span> Minimum 5 kişilik grup</li>
                         <li><span class="check-icon">✓</span> 45 dakikalık dersler</li>
                     </ul>
-                    <button class="btn btn-outline select-package" data-package="gold" style="width: 100%; text-align: center;">Paketi Seç</button>
+                    <div>
+                        <div class="package-price-option" data-package="gold" data-price="240">
+                            <div>
+                                <div class="price-label">Tek derslik katılım</div>
+                                <div class="price">240₺</div>
+                            </div>
+                        </div>
+                        <div class="package-price-option" data-package="gold" data-price="685">
+                            <div>
+                                <div class="price-label">1 haftalık katılım</div>
+                                <div class="price">685₺</div>
+                            </div>
+                        </div>
+                        <div class="package-price-option" data-package="gold" data-price="3045">
+                            <div>
+                                <div class="price-label">1 aylık toplam 12 ders</div>
+                                <div class="price">3.045₺</div>
+                            </div>
+                        </div>
+                        <div class="package-price-option" data-package="gold" data-price="4620">
+                            <div>
+                                <div class="price-label">2 aylık toplam 24 ders</div>
+                                <div class="price">4.620₺</div>
+                            </div>
+                        </div>
+                        <div class="package-price-option" data-package="gold" data-price="6510">
+                            <div>
+                                <div class="price-label">3 aylık toplam 36 ders</div>
+                                <div class="price">6.510₺</div>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+
+                  
                 </div>
 
                 <!-- DIAMOND Package -->
                 <div class="package-card package-popular" id="diamond-package">
-                    <span class="popular-badge">En Popüler</span>
-                    <h3 class="package-title">DIAMOND Paket 💎</h3>
+                    <span class="popular-badge">⭐ En Popüler</span>
+                    <div class="icon-container">
+                        <div class="custom-icon diamond-icon package-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                    </div>
+                    <h3 class="package-title">DIAMOND Paket</h3>
                     <p class="package-description">Bire bir özel derslerle kişiselleştirilmiş program. Omurga sağlığı için ideal.</p>
-                    
-                    <div class="package-price-container">
-                        <div class="package-price-option" data-price="10080">
-                            <div class="price-info">
-                                <div class="price-label">Haftalık 2, ayda 8 ders</div>
-                                <div class="price">10.080₺</div>
-                            </div>
-                        </div>
-                        <div class="package-price-option" data-price="12600">
-                            <div class="price-info">
-                                <div class="price-label">Haftalık 3, ayda 12 ders</div>
-                                <div class="price">12.600₺</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="package-meta">
-                        <span>📅 4 hafta</span>
-                        <span>👤 8 özel ders</span>
-                    </div>
                     <ul class="package-features">
                         <li><span class="check-icon">✓</span> Bire bir canlı online dersler</li>
                         <li><span class="check-icon">✓</span> Kişiye özel program</li>
@@ -1266,33 +1895,33 @@
                         <li><span class="check-icon">✓</span> WhatsApp'ta iletişim</li>
                         <li><span class="check-icon">✓</span> Omurga sağlığına özel</li>
                     </ul>
-                    <button class="btn btn-primary select-package" data-package="diamond" style="width: 100%; text-align: center;">Paketi Seç</button>
+                    <div>
+                        <div class="package-price-option" data-package="diamond" data-price="10080">
+                            <div>
+                                <div class="price-label">Haftalık 2, ayda 8 ders</div>
+                                <div class="price">10.080₺</div>
+                            </div>
+                        </div>
+                        <div class="package-price-option" data-package="diamond" data-price="12600">
+                            <div>
+                                <div class="price-label">Haftalık 3, ayda 12 ders</div>
+                                <div class="price">12.600₺</div>
+                            </div>
+                        </div>
+                    </div>
+
+                   
                 </div>
 
                 <!-- VIP Package -->
                 <div class="package-card" id="vip-package">
-                    <h3 class="package-title">VIP Paket 🎖️</h3>
+                    <div class="icon-container">
+                        <div class="custom-icon vip-icon package-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                    </div>
+                    <h3 class="package-title">VIP Paket</h3>
                     <p class="package-description">"Eğitmen şehrinde" - En kapsamlı deneyim. Özel dersler, açık hava antrenmanları ve düzenli değerlendirmeler.</p>
-                    
-                    <div class="package-price-container">
-                        <div class="package-price-option" data-price="11970">
-                            <div class="price-info">
-                                <div class="price-label">Haftalık 2, ayda 8 ders</div>
-                                <div class="price">11.970₺</div>
-                            </div>
-                        </div>
-                        <div class="package-price-option" data-price="15750">
-                            <div class="price-info">
-                                <div class="price-label">Haftalık 3, ayda 12 ders</div>
-                                <div class="price">15.750₺</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="package-meta">
-                        <span>📅 4 hafta</span>
-                        <span>👑 8 VIP ders</span>
-                    </div>
                     <ul class="package-features">
                         <li><span class="check-icon">✓</span> Bire bir canlı dersler</li>
                         <li><span class="check-icon">✓</span> Açık havada cardio/pilates</li>
@@ -1300,10 +1929,28 @@
                         <li><span class="check-icon">✓</span> Hediye stretching dersi</li>
                         <li><span class="check-icon">✓</span> 7/24 WhatsApp desteği</li>
                     </ul>
-                    <button class="btn btn-outline select-package" data-package="vip" style="width: 100%; text-align: center;">Paketi Seç</button>
+                    <div>
+                        <div class="package-price-option" data-package="vip" data-price="11970">
+                            <div>
+                                <div class="price-label">Haftalık 2, ayda 8 ders</div>
+                                <div class="price">11.970₺</div>
+                            </div>
+                        </div>
+                        <div class="package-price-option" data-package="vip" data-price="15750">
+                            <div>
+                                <div class="price-label">Haftalık 3, ayda 12 ders</div>
+                                <div class="price">15.750₺</div>
+                            </div>
+                        </div>
+                    </div>
+
+                   
                 </div>
             </div>
-            <p style="text-align: center; margin-top: 30px; font-size: 12px; color: var(--gray-600);">*Tüm dersler kadınlar özelindedir.</p>
+
+            <p style="text-align: center; margin-top: 2rem; color: var(--foreground); font-size: 0.875rem;">
+                *Tüm dersler kadınlar özelindedir.
+            </p>
         </div>
     </section>
 
@@ -1314,10 +1961,11 @@
                 <h3>Ödeme Yap</h3>
                 <button class="close-modal">&times;</button>
             </div>
-            <div class="selected-package-info">
-                <h4 id="selectedPackageName"></h4>
-                <p id="selectedPackageDescription"></p>
-                <p id="selectedPackagePrice" style="font-size: 1.5rem; font-weight: 600; margin: 1rem 0;"></p>
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;" id="modal-icon">🥇</div>
+                <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;" id="modal-package-name">GOLD Paket</h4>
+                <p style="color: var(--foreground); margin-bottom: 1rem;" id="modal-package-desc"></p>
+                <div style="font-size: 2.5rem; font-weight: 600;" id="modal-price">3.045₺</div>
             </div>
             <div class="payment-options">
                 <div class="payment-option selected" data-method="credit-card">
@@ -1329,9 +1977,7 @@
                     <p>Havale ile ödeme yapın</p>
                 </div>
             </div>
-            <div class="payment-details">
-               </div>
-            <button class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;" id="proceedPayment">Ödemeye Devam Et</button>
+            <button class="btn btn-primary" style="width: 100%;" id="proceedPayment">Ödemeye Devam Et</button>
         </div>
     </div>
 
@@ -1339,20 +1985,36 @@
     <section id="about" class="about">
         <div class="container">
             <div class="about-content">
-                <div>
-                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=500&fit=crop" alt="Hacer Zorlu Pilates stüdyosunda" class="about-image">
+                <div class="about-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=500&fit=crop" alt="Hacer Zorlu" class="about-image">
+                    <div class="about-floating-badge">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div class="custom-icon info-icon-1 info-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div>
+                                <div style="font-size: 1.5rem; font-weight: 600;">6+</div>
+                                <div style="font-size: 0.875rem; opacity: 0.8;">Sertifika</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="about-text">
-                    <span class="badge">Eğitmeninizi Tanıyın</span>
-                    <h2>Hacer ZORLU</h2>
-                    <p>
+
+                <div>
+                    <span class="badge">EĞİTMENİNİZİ TANYIN</span>
+                    <h2 class="section-title">Hacer ZORLU</h2>
+                    <p style="color: var(--foreground); margin-bottom: 1rem;">
                         2 Aralık 1997 Edremit doğumluyum. 2021 yılında Işık Üniversitesi Tekstil ve Moda Tasarımı bölümünden mezun oldum. Aynı yıl Pilates ile tanıştım; bu süreçte fitness ile de ilgilenmeye başladım ve hala her iki disiplini aktif olarak sürdürüyorum.
                     </p>
-                    <p>
+                    <p style="color: var(--foreground); margin-bottom: 2rem;">
                         2023 Mayıs'tan bu yana profesyonel Pilates eğitmenliği yapıyorum. Eğitim yolculuğuma özel ekollerle başladım, ardından TCF ve Balanced Body sistemine ait temel modül eğitimlerini ve çeşitli workshopları tamamladım.
                     </p>
+
                     <div class="about-grid">
-                        <div>
+                        <div class="about-card">
+                            <div class="custom-icon info-icon-2 info-icon">
+                                <i class="fas fa-scroll"></i>
+                            </div>
                             <h4>Sertifikalar</h4>
                             <ul>
                                 <li>• TCF 1. Kademe Yardımcı Eğitmen</li>
@@ -1360,7 +2022,10 @@
                                 <li>• Australia Sports Institute</li>
                             </ul>
                         </div>
-                        <div>
+                        <div class="about-card">
+                            <div class="custom-icon info-icon-3 info-icon">
+                                <i class="fas fa-dumbbell"></i>
+                            </div>
                             <h4>Uzmanlık Alanları</h4>
                             <ul>
                                 <li>• Core Güçlendirme</li>
@@ -1374,29 +2039,111 @@
         </div>
     </section>
 
-    <!-- Pilates About Section -->
+    <!-- Education Section -->
+    <section id="education" class="education">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Eğitimlerim</h2>
+                <p class="section-description">
+                    Sürekli gelişim ve uzmanlaşma yolculuğum
+                </p>
+            </div>
+
+            <div class="education-grid">
+                <div class="education-card">
+                    <div class="custom-icon education-icon-1 education-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="education-content">
+                        <h3>TCF 1. Kademe Yardımcı Eğitmen (Bursa)</h3>
+                        <p>Eğitmenlik yolculuğumda önce özel ekollerden ve Türkiye Cimnastik Federasyonu'ndan eğitimler alarak başladım.</p>
+                    </div>
+                </div>
+
+                <div class="education-card">
+                    <div class="custom-icon education-icon-2 education-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="education-content">
+                        <h3>Balanced Body Baps Academy Module Mat 1</h3>
+                        <p>Dünyaca kabul görmüş Balanced Body sistemine ait temel modül eğitimlerini tamamladım.</p>
+                    </div>
+                </div>
+
+                <div class="education-card">
+                    <div class="custom-icon education-icon-3 education-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="education-content">
+                        <h3>Balanced Body Baps Academy Module 1</h3>
+                        <p>Balanced Body sisteminin temel eğitimlerini içeren bu modülü başarıyla tamamladım.</p>
+                    </div>
+                </div>
+
+                <div class="education-card">
+                    <div class="custom-icon education-icon-4 education-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <div class="education-content">
+                        <h3>Balanced Body Baps Academy Module Mat 2</h3>
+                        <p>Mat pilates alanında ileri seviye eğitimler içeren bu modülü tamamladım.</p>
+                    </div>
+                </div>
+
+                <div class="education-card">
+                    <div class="custom-icon education-icon-5 education-icon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="education-content">
+                        <h3>Balanced Body Baps Academy Module Reformer 2</h3>
+                        <p>Reformer cihazı ile ileri seviye pilates eğitimleri içeren bu modülü tamamladım.</p>
+                    </div>
+                </div>
+
+                <div class="education-card">
+                    <div class="custom-icon education-icon-6 education-icon">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <div class="education-content">
+                        <h3>Australia Sports Institute Level 1 Pilates Trainer</h3>
+                        <p>Uluslararası geçerliliği olan bu kapsamlı eğitimi başarıyla tamamladım.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pilates Info Section -->
     <section id="pilates" class="pilates-about">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Pilates Hakkında</h2>
-                <p class="section-description">Joseph Pilates'in eşsiz vücut kondisyonlama yöntemi hakkında bilmeniz gerekenler</p>
+                <p class="section-description">
+                    Joseph Pilates'in eşsiz vücut kondisyonlama yöntemi hakkında bilmeniz gerekenler
+                </p>
             </div>
-            
+
             <div class="pilates-cards">
                 <div class="pilates-card">
-                    <div class="pilates-icon">?</div>
+                    <div class="custom-icon info-icon-1 info-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
                     <h3>Pilates Nedir?</h3>
                     <p>Pilates, Joseph H. Pilates tarafından geliştirilen, nefesle uyumlu ve kontrollü hareketlerden oluşan bir egzersiz sistemidir. Bedenin dengeli şekilde güçlenmesini, esnemesini ve duruşun iyileşmesini sağlar.</p>
                 </div>
-                
+
                 <div class="pilates-card">
-                    <div class="pilates-icon"><i class="fas fa-spa"></i></div>
+                    <div class="custom-icon info-icon-2 info-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
                     <h3>Omurga Sağlığı</h3>
                     <p>Omurga rahatsızlığı olan bireyler için Pilates, ağrıları hafifletir, postürü düzeltir ve omurgayı destekleyen kasları güvenli şekilde güçlendirir. Skolyoz, disk kayması gibi durumlarda uzman eşliğinde faydalı bir destek sağlar.</p>
                 </div>
-                
+
                 <div class="pilates-card">
-                    <div class="pilates-icon"><i class="fas fa-users"></i></div>
+                    <div class="custom-icon info-icon-3 info-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
                     <h3>Kimler Yapabilir?</h3>
                     <p>Her yaştan kadın ve erkek, egzersiz geçmişi olmasa bile Pilates yapabilir. Hamileler, yaşlılar ve rehabilitasyon sürecindekiler için de uygundur. Ciddi sağlık sorunlarında hekim onayı önerilir.</p>
                 </div>
@@ -1404,61 +2151,36 @@
         </div>
     </section>
 
-    <!-- Education Section -->
-    <section id="education" class="education">
+    <!-- LIVO Section -->
+    <section id="livo" class="livo-section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Eğitimlerim</h2>
-                <p class="section-description">Sürekli gelişim ve uzmanlaşma yolculuğum</p>
+                <h2 class="section-title">LIVO'nun Anlamı</h2>
+                <p class="section-description">
+                    Yaşam, canlılık ve birlik - LIVO felsefesiyle tanışın
+                </p>
             </div>
-            
-            <div class="education-grid">
-                <div class="education-card">
-                    <div class="education-icon"><i class="fas fa-medal"></i></div>
-                    <div class="education-content">
-                        <h3>TCF 1. Kademe Yardımcı Eğitmen (Bursa)</h3>
-                        <p>Eğitmenlik yolculuğumda önce özel ekollerden ve Türkiye Cimnastik Federasyonu'ndan eğitimler alarak başladım.</p>
-                    </div>
+
+            <div class="livo-grid">
+                <div class="livo-card">
+                    <div class="livo-letter">L</div>
+                    <h3 class="livo-title">Life (Yaşam)</h3>
+                    <p class="livo-quote">"Bedenini ve zihnini uyandır. Her nefeste yaşama yeniden bağlan."</p>
+                    <p class="livo-description">Yaşam, anda kalmakla başlar. LIVO'da her hareket, bedeninin ihtiyaçlarını dinlemen ve yaşam enerjini tazelemen için tasarlandı. Kendine dön, yenilen, yaşamını güçlendir.</p>
                 </div>
-                
-                <div class="education-card">
-                    <div class="education-icon"><i class="fas fa-medal"></i></div>
-                    <div class="education-content">
-                        <h3>Balanced Body Baps Academy Module Mat 1</h3>
-                        <p>Dünyaca kabul görmüş Balanced Body sistemine ait temel modül eğitimlerini tamamladım.</p>
-                    </div>
+
+                <div class="livo-card">
+                    <div class="livo-letter">V</div>
+                    <h3 class="livo-title">Vitality (Canlılık)</h3>
+                    <p class="livo-quote">"Hareket et, enerjini yükselt, bedenindeki gücü keşfet."</p>
+                    <p class="livo-description">Canlılık, sağlıklı bir beden ve berrak bir zihnin birleşimidir. Yoga ve pilatesle kaslarını güçlendirirken ruhunu da beslersin. Enerjini yeniden canlandır; kendinin en dinamik haline ulaş.</p>
                 </div>
-                
-                <div class="education-card">
-                    <div class="education-icon"><i class="fas fa-medal"></i></div>
-                    <div class="education-content">
-                        <h3>Balanced Body Baps Academy Module 1</h3>
-                        <p>Balanced Body sisteminin temel eğitimlerini içeren bu modülü başarıyla tamamladım.</p>
-                    </div>
-                </div>
-                
-                <div class="education-card">
-                    <div class="education-icon"><i class="fas fa-medal"></i></div>
-                    <div class="education-content">
-                        <h3>Balanced Body Baps Academy Module Mat 2</h3>
-                        <p>Mat pilates alanında ileri seviye eğitimler içeren bu modülü tamamladım.</p>
-                    </div>
-                </div>
-                
-                <div class="education-card">
-                    <div class="education-icon"><i class="fas fa-medal"></i></div>
-                    <div class="education-content">
-                        <h3>Balanced Body Baps Academy Module Reformer 2</h3>
-                        <p>Reformer cihazı ile ileri seviye pilates eğitimleri içeren bu modülü tamamladım.</p>
-                    </div>
-                </div>
-                
-                <div class="education-card">
-                    <div class="education-icon"><i class="fas fa-medal"></i></div>
-                    <div class="education-content">
-                        <h3>Australia Sports Institute Level 1 Pilates Trainer</h3>
-                        <p>Uluslararası geçerliliği olan bu kapsamlı eğitimi başarıyla tamamladım.</p>
-                    </div>
+
+                <div class="livo-card">
+                    <div class="livo-letter">O</div>
+                    <h3 class="livo-title">Oneness (Birlik)</h3>
+                    <p class="livo-quote">"Beden, zihin ve ruh arasında mükemmel bir denge kur."</p>
+                    <p class="livo-description">Birlik, bütünlüğü hissetmektir. LIVO'da her pratik; nefesin, hareketin ve düşüncelerinle uyum içinde akmanı sağlar. Kendinle bir ol, güçlen, huzur bul.</p>
                 </div>
             </div>
         </div>
@@ -1469,9 +2191,11 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Öğrenci Yorumları</h2>
-                
+                <p class="section-description">
+                    Öğrencilerimizin deneyimlerini keşfedin
+                </p>
             </div>
-            
+
             <div class="testimonials-grid">
                 <div class="testimonial-card">
                     <div class="testimonial-stars">
@@ -1547,20 +2271,24 @@
                     </p>
                     <ul class="contact-info">
                         <li>
-                            <span>✉</span>
-                            <span>livolab25@gmail.com</span>
+                            <span style="font-size: 1.5rem;">✉</span>
+                            <div>
+                                <div style="font-size: 0.875rem; opacity: 0.8;">Email</div>
+                                <a href="mailto:livolab25@gmail.com" style="color: var(--background); text-decoration: none;">livolab25@gmail.com</a>
+                            </div>
                         </li>
                     </ul>
                 </div>
                 <div class="contact-form">
                     <h3>Hemen Başlayın</h3>
                     <div class="contact-buttons">
-                        <a href="#packages" class="btn btn-secondary btn-lg">Tüm Paketleri Görüntüle</a>
-                        <a href="mailto:hacercelen97@gmail.com" class="btn btn-white-outline btn-lg">Danışma Randevusu Al</a>
+                        <button class="btn btn-secondary" onclick="scrollToSection('#packages')">
+                            Tüm Paketleri Görüntüle
+                        </button>
+                        <a href="mailto:livolab25@gmail.com" class="btn btn-white-outline">
+                            Danışma Randevusu Al
+                        </a>
                     </div>
-                    <p class="contact-guarantee">
-                       
-                    </p>
                 </div>
             </div>
         </div>
@@ -1571,370 +2299,302 @@
         <div class="container">
             <div class="footer-content">
                 <div>
-                    <div class="footer-brand">
-                        <div class="footer-logo">
-                            <img src="livolab-white.png" alt="Logo" style="width: 100%; height: 100%; object-fit: contain;">
-                        </div>
-                    </div>
+                    <div class="footer-brand">LivoLab</div>
                     <p class="footer-description">
                         Profesyonel online Pilates eğitimi ile bedeninizi ve zihninizi dönüştürün.
                     </p>
+                    <a href="https://www.instagram.com/livolab_/" target="_blank" class="instagram-btn">
+                        <i class="fab fa-instagram"></i>
+                        @livolab_
+                    </a>
                 </div>
+
                 <div class="footer-section">
                     <h4>Hızlı Bağlantılar</h4>
                     <ul>
-                        <li><a href="#packages">Paketler</a></li>
-                        <li><a href="#about">Hakkımda</a></li>
-                        <li><a href="#pilates">Pilates</a></li>
-                        <li><a href="#contact">İletişim</a></li>
+                        <li><a href="#packages" onclick="scrollToSection('#packages')">Paketler</a></li>
+                        <li><a href="#about" onclick="scrollToSection('#about')">Hakkımda</a></li>
+                        <li><a href="#education" onclick="scrollToSection('#education')">Eğitimler</a></li>
+                        <li><a href="#pilates" onclick="scrollToSection('#pilates')">Pilates</a></li>
+                        <li><a href="#livo" onclick="scrollToSection('#livo')">LIVO</a></li>
+                        <li><a href="#contact" onclick="scrollToSection('#contact')">İletişim</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="footer-section">
                     <h4>Hizmetlerimiz</h4>
                     <ul>
-                        <li>Online Grup Dersleri</li>
-                        <li>Birebir Özel Dersler</li>
-                        <li>Omurga Sağlığı Programları</li>
-                        <li>Esneklik Eğitimleri</li>
+                        <li><a href="#">Online Grup Dersleri</a></li>
+                        <li><a href="#">Birebir Özel Dersler</a></li>
+                        <li><a href="#">Omurga Sağlığı Programları</a></li>
+                        <li><a href="#">Esneklik Eğitimleri</a></li>
                     </ul>
                 </div>
+
                 <div class="footer-section">
                     <h4>İletişim</h4>
                     <ul>
-                        <li>livolab25@gmail.com</li>
-                        <li class="social-links">
-                            <a href="https://www.instagram.com/livolab_/" target="_blank" class="social-link">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="20" height="20">
-                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                                </svg>
-                            </a>
-                        </li>
+                        <li><a href="mailto:livolab25@gmail.com">livolab25@gmail.com</a></li>
                     </ul>
                 </div>
             </div>
+
             <div class="footer-bottom">
-                <p>&copy; 2025 LivoLab. Tüm hakları saklıdır. <a href="https://www.instagram.com/bigsparkmedia/" target="_blank" style="color: var(--gray-400);">Big Spark Media</a> tarafından geliştirilmiştir.</p>
+                <p>© 2025 LivoLab. Tüm hakları saklıdır. <a href="https://www.instagram.com/bigsparkmedia/" target="_blank" style="color: var(--accent);">Big Spark Media</a> tarafından geliştirilmiştir.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Instagram Float Button -->
+    <div class="instagram-float">
+        <button class="instagram-float-btn" onclick="toggleInstagramPopup()">
+            <i class="fab fa-instagram"></i>
+        </button>
+        <div class="instagram-popup" id="instagramPopup">
+            <button class="close-popup" onclick="toggleInstagramPopup()">&times;</button>
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <div style="width: 4rem; height: 4rem; margin: 0 auto 1rem; background: var(--primary-light); border-radius: 1rem; display: flex; align-items: center; justify-content: center; color: var(--background); font-size: 2rem;">
+                    <i class="fab fa-instagram"></i>
+                </div>
+            </div>
+            <h3>Instagram'da Takip Edin</h3>
+            <p>Günlük pilates ipuçları, motivasyon ve özel kampanyalar için bizi takip edin!</p>
+            <a href="https://www.instagram.com/livolab_/" target="_blank" class="instagram-btn">
+                <i class="fab fa-instagram"></i>
+                @livolab_
+            </a>
+        </div>
+    </div>
+
     <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
+        // Loading screen
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hidden');
+            }, 1500);
         });
 
-        // Add scroll effect to navbar
+        // Smooth scrolling
+        function scrollToSection(selector) {
+            const element = document.querySelector(selector);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Navbar scroll effect
         window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 100) {
-                navbar.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
             } else {
-                navbar.style.boxShadow = 'none';
+                navbar.classList.remove('scrolled');
             }
         });
 
         // Quiz functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const quizSteps = document.querySelectorAll('.quiz-step');
-            const quizOptions = document.querySelectorAll('.quiz-option');
-            const nextButtons = document.querySelectorAll('.quiz-next');
-            const prevButtons = document.querySelectorAll('.quiz-prev');
-            const submitButton = document.querySelector('.quiz-submit');
-            const restartButton = document.querySelector('.quiz-restart');
-            const goToPackageButton = document.querySelector('.go-to-package');
-            const resultText = document.querySelector('.result-text');
-            const quizResult = document.querySelector('.quiz-result');
-            
-            let currentStep = 1;
-            const answers = {};
-            
-            // Initialize first step
-            showStep(currentStep);
-            
-            // Option selection
-            quizOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    // Remove selected class from all options in this step
-                    const stepOptions = this.closest('.quiz-step').querySelectorAll('.quiz-option');
-                    stepOptions.forEach(opt => opt.classList.remove('selected'));
-                    
-                    // Add selected class to clicked option
-                    this.classList.add('selected');
-                    
-                    // Store answer
-                    const step = this.closest('.quiz-step').dataset.step;
-                    answers[step] = this.dataset.value;
-                });
-            });
-            
-            // Next button
-            nextButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const currentStepElement = this.closest('.quiz-step');
-                    const step = currentStepElement.dataset.step;
-                    
-                    // Validate selection
-                    if (!answers[step]) {
-                        alert('Lütfen bir seçenek seçiniz.');
-                        return;
-                    }
-                    
-                    currentStep++;
-                    showStep(currentStep);
-                });
-            });
-            
-            // Previous button
-            prevButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    currentStep--;
-                    showStep(currentStep);
-                });
-            });
-            
-            // Submit button
-            if (submitButton) {
-                submitButton.addEventListener('click', function() {
-                    const currentStepElement = this.closest('.quiz-step');
-                    const step = currentStepElement.dataset.step;
-                    
-                    // Validate selection
-                    if (!answers[step]) {
-                        alert('Lütfen bir seçenek seçiniz.');
-                        return;
-                    }
-                    
-                    // Calculate result
-                    const result = calculateResult();
-                    showResult(result);
-                });
-            }
-            
-            // Go to package button
-            if (goToPackageButton) {
-                goToPackageButton.addEventListener('click', function() {
-                    const result = calculateResult();
-                    const packageId = result.toLowerCase() + '-package';
-                    const packageElement = document.getElementById(packageId);
-                    
-                    if (packageElement) {
-                        // Close quiz result
-                        quizResult.style.display = 'none';
-                        
-                        // Scroll to the package
-                        packageElement.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'center'
-                        });
-                        
-                        // Add highlight effect
-                        packageElement.style.boxShadow = '0 0 0 4px rgba(0,0,0,0.2)';
-                        setTimeout(() => {
-                            packageElement.style.boxShadow = '';
-                        }, 2000);
-                    }
-                });
-            }
-            
-            // Restart button
-            if (restartButton) {
-                restartButton.addEventListener('click', function() {
-                    // Reset answers
-                    for (let key in answers) {
-                        delete answers[key];
-                    }
-                    
-                    // Reset UI
-                    quizOptions.forEach(option => option.classList.remove('selected'));
-                    quizResult.style.display = 'none';
-                    
-                    // Go to first step
-                    currentStep = 1;
-                    showStep(currentStep);
-                });
-            }
-            
-            // Show step function
-            function showStep(step) {
-                quizSteps.forEach(stepElement => {
-                    stepElement.classList.remove('active');
-                });
+        let currentStep = 1;
+        const answers = {};
+        let selectedOption = null;
+
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const stepElement = this.closest('.quiz-step');
+                const stepOptions = stepElement.querySelectorAll('.quiz-option');
                 
-                const stepElement = document.querySelector(`.quiz-step[data-step="${step}"]`);
+                stepOptions.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                const step = stepElement.dataset.step;
+                answers[step] = this.dataset.value;
+                selectedOption = this.dataset.value;
+            });
+        });
+
+        document.querySelectorAll('.quiz-next').forEach(button => {
+            button.addEventListener('click', function() {
+                const currentStepElement = this.closest('.quiz-step');
+                const step = currentStepElement.dataset.step;
+                
+                if (!answers[step]) {
+                    alert('Lütfen bir seçenek seçiniz.');
+                    return;
+                }
+                
+                currentStep++;
+                showQuizStep(currentStep);
+            });
+        });
+
+        document.querySelectorAll('.quiz-prev').forEach(button => {
+            button.addEventListener('click', function() {
+                currentStep--;
+                showQuizStep(currentStep);
+            });
+        });
+
+        document.querySelector('.quiz-submit').addEventListener('click', function() {
+            const currentStepElement = this.closest('.quiz-step');
+            const step = currentStepElement.dataset.step;
+            
+            if (!answers[step]) {
+                alert('Lütfen bir seçenek seçiniz.');
+                return;
+            }
+            
+            showQuizResult();
+        });
+
+        document.querySelector('.quiz-restart').addEventListener('click', function() {
+            Object.keys(answers).forEach(key => delete answers[key]);
+            selectedOption = null;
+            currentStep = 1;
+            
+            document.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
+            document.querySelector('.quiz-result').classList.remove('active');
+            showQuizStep(1);
+        });
+
+        function showQuizStep(step) {
+            document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
+            const stepElement = document.querySelector(`.quiz-step[data-step="${step}"]`);
+            if (stepElement) {
                 stepElement.classList.add('active');
-                
-                // Hide/show navigation buttons
-                const prevButton = stepElement.querySelector('.quiz-prev');
-                const nextButton = stepElement.querySelector('.quiz-next');
-                
-                if (prevButton) {
-                    prevButton.style.visibility = step === '1' ? 'hidden' : 'visible';
-                }
+                selectedOption = answers[step] || null;
             }
+        }
+
+        function showQuizResult() {
+            document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
             
-            // Calculate result function
-            function calculateResult() {
-                // Enhanced logic based on user answers
-                if (answers['4'] === 'group') {
-                    return 'GOLD';
-                } else if (answers['4'] === 'personal' && answers['3'] === 'yes') {
-                    return 'DIAMOND';
-                } else if (answers['4'] === 'personal' || answers['4'] === 'mixed') {
-                    return 'VIP';
-                } else if (answers['5'] === 'posture' && answers['3'] === 'yes') {
-                    return 'DIAMOND';
-                } else if (answers['5'] === 'fitness' && answers['2'] === '4+') {
-                    return 'VIP';
-                } else {
-                    return 'GOLD';
-                }
+            const result = calculateQuizResult();
+            const resultPackage = document.querySelector('.result-package');
+            const resultText = document.querySelector('.result-text');
+            
+            resultPackage.textContent = result;
+            resultText.textContent = getResultText(result);
+            
+            document.querySelector('.quiz-result').classList.add('active');
+        }
+
+        function calculateQuizResult() {
+            if (answers['4'] === 'group') return 'GOLD';
+            if (answers['4'] === 'personal' && answers['3'] === 'yes') return 'DIAMOND';
+            if (answers['4'] === 'personal' || answers['4'] === 'mixed') return 'VIP';
+            if (answers['5'] === 'posture' && answers['3'] === 'yes') return 'DIAMOND';
+            return 'GOLD';
+        }
+
+        function getResultText(result) {
+            const texts = {
+                'GOLD': 'GOLD paketi, grup dersleriyle başlamak isteyenler için idealdir. Haftada 3 gün ders ve WhatsApp desteği ile pilates yolculuğunuza başlayın.',
+                'DIAMOND': 'DIAMOND paketi, bire bir özel derslerle omurga sağlığınızı desteklemek isteyenler için mükemmel bir seçim. Kişiye özel program ve daha fazla eğitmen desteği sunar.',
+                'VIP': 'VIP paketi, en kapsamlı deneyimi sunar. Bire bir derslerin yanı sıra açık havada antrenman ve düzenli değerlendirmelerle maksimum fayda sağlarsınız.'
+            };
+            return texts[result];
+        }
+
+        function goToPackage() {
+            const result = calculateQuizResult();
+            const packageId = result.toLowerCase() + '-package';
+            const packageElement = document.getElementById(packageId);
+            
+            if (packageElement) {
+                packageElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                setTimeout(() => {
+                    packageElement.style.boxShadow = '0 0 0 4px rgba(0, 0, 0, 0.3)';
+                    setTimeout(() => {
+                        packageElement.style.boxShadow = '';
+                    }, 2000);
+                }, 500);
             }
+        }
+
+        // Package selection and payment modal
+        let selectedPackage = '';
+        let selectedPrice = '';
+
+        document.querySelectorAll('.package-price-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const packageCard = this.closest('.package-card');
+                const packageOptions = packageCard.querySelectorAll('.package-price-option');
+                
+                packageOptions.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                selectedPackage = this.dataset.package;
+                selectedPrice = this.dataset.price;
+                
+                // Show payment modal
+                showPaymentModal(selectedPackage, selectedPrice);
+            });
+        });
+
+        function showPaymentModal(packageName, price) {
+            const modal = document.getElementById('paymentModal');
+            const modalIcon = document.getElementById('modal-icon');
+            const modalPackageName = document.getElementById('modal-package-name');
+            const modalPackageDesc = document.getElementById('modal-package-desc');
+            const modalPrice = document.getElementById('modal-price');
             
-            // Show result function
-            function showResult(result) {
-                const resultStep = document.querySelector('.quiz-result');
-                const activeStep = document.querySelector('.quiz-step.active');
-                
-                activeStep.classList.remove('active');
-                resultStep.style.display = 'block';
-                
-                // Set result text based on the package
-                let packageDescription = '';
-                
-                switch(result) {
-                    case 'GOLD':
-                        packageDescription = 'GOLD paketi, grup dersleriyle başlamak isteyenler için idealdir. Haftada 3 gün ders ve WhatsApp desteği ile pilates yolculuğunuza başlayın.';
-                        break;
-                    case 'DIAMOND':
-                        packageDescription = 'DIAMOND paketi, bire bir özel derslerle omurga sağlığınızı desteklemek isteyenler için mükemmel bir seçim. Kişiye özel program ve daha fazla eğitmen desteği sunar.';
-                        break;
-                    case 'VIP':
-                        packageDescription = 'VIP paketi, en kapsamlı deneyimi sunar. Bire bir derslerin yanı sıra açık havada antrenman ve düzenli değerlendirmelerle maksimum fayda sağlarsınız.';
-                        break;
-                    default:
-                        packageDescription = 'GOLD paketi, grup dersleriyle başlamak isteyenler için idealdir.';
-                }
-                
-                resultText.textContent = packageDescription;
+            const packageIcons = {
+                'gold': '🥇',
+                'diamond': '💎',
+                'vip': '👑'
+            };
+            
+            const packageNames = {
+                'gold': 'GOLD Paket',
+                'diamond': 'DIAMOND Paket',
+                'vip': 'VIP Paket'
+            };
+            
+            const packageDescs = {
+                'gold': '"Tüm seviyeler için uygun" - Eğitmenle her seviye için uygun canlı online grup ders.',
+                'diamond': 'Bire bir özel derslerle kişiselleştirilmiş program. Omurga sağlığı için ideal.',
+                'vip': '"Eğitmen şehrinde" - En kapsamlı deneyim. Özel dersler, açık hava antrenmanları ve düzenli değerlendirmeler.'
+            };
+            
+            modalIcon.textContent = packageIcons[packageName];
+            modalPackageName.textContent = packageNames[packageName];
+            modalPackageDesc.textContent = packageDescs[packageName];
+            modalPrice.textContent = price + '₺';
+            
+            modal.classList.add('active');
+        }
+
+        document.querySelector('.close-modal').addEventListener('click', function() {
+            document.getElementById('paymentModal').classList.remove('active');
+        });
+
+        document.querySelectorAll('.payment-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        document.getElementById('proceedPayment').addEventListener('click', function() {
+            const selectedMethod = document.querySelector('.payment-option.selected').dataset.method;
+            
+            if (selectedMethod === 'credit-card') {
+                alert('Kredi kartı ödeme sayfasına yönlendiriliyorsunuz...');
+            } else {
+                alert('Banka hesap bilgileri için lütfen bizimle iletişime geçin.');
             }
         });
 
-        // Package selection and payment modal
-        document.addEventListener('DOMContentLoaded', function() {
-            const packageButtons = document.querySelectorAll('.select-package');
-            const paymentModal = document.getElementById('paymentModal');
-            const closeModal = document.querySelector('.close-modal');
-            const selectedPackageName = document.getElementById('selectedPackageName');
-            const selectedPackageDescription = document.getElementById('selectedPackageDescription');
-            const selectedPackagePrice = document.getElementById('selectedPackagePrice');
-            const paymentOptions = document.querySelectorAll('.payment-option');
-            const proceedPayment = document.getElementById('proceedPayment');
-            const priceOptions = document.querySelectorAll('.package-price-option');
-            
-            let selectedPackage = '';
-            let selectedPaymentMethod = 'credit-card';
-            let selectedPrice = '';
-            
-            // Price option selection
-            priceOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    // Remove selected class from all options in the same package
-                    const packageCard = this.closest('.package-card');
-                    const packagePriceOptions = packageCard.querySelectorAll('.package-price-option');
-                    packagePriceOptions.forEach(opt => opt.classList.remove('selected'));
-                    
-                    // Add selected class to clicked option
-                    this.classList.add('selected');
-                    
-                    // Store selected price
-                    selectedPrice = this.dataset.price;
-                });
-            });
-            
-            // Package selection
-            packageButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    selectedPackage = this.dataset.package;
-                    
-                    // Check if a price option is selected
-                    const packageCard = this.closest('.package-card');
-                    const selectedPriceOption = packageCard.querySelector('.package-price-option.selected');
-                    
-                    if (!selectedPriceOption) {
-                        alert('Lütfen bir fiyat seçeneği seçiniz.');
-                        return;
-                    }
-                    
-                    selectedPrice = selectedPriceOption.dataset.price;
-                    
-                    // Set modal content based on selected package
-                    switch(selectedPackage) {
-                        case 'gold':
-                            selectedPackageName.textContent = 'GOLD Paket 🏅';
-                            selectedPackageDescription.textContent = '"Tüm seviyeler için uygun" - Eğitmenle her seviye için uygun canlı online grup ders.';
-                            break;
-                        case 'diamond':
-                            selectedPackageName.textContent = 'DIAMOND Paket 💎';
-                            selectedPackageDescription.textContent = 'Bire bir özel derslerle kişiselleştirilmiş program. Omurga sağlığı için ideal.';
-                            break;
-                        case 'vip':
-                            selectedPackageName.textContent = 'VIP Paket 🎖️';
-                            selectedPackageDescription.textContent = '"Eğitmen şehrinde" - En kapsamlı deneyim. Özel dersler, açık hava antrenmanları ve düzenli değerlendirmeler.';
-                            break;
-                    }
-                    
-                    // Set price
-                    selectedPackagePrice.textContent = `${selectedPrice}₺`;
-                    
-                    // Show modal
-                    paymentModal.classList.add('active');
-                });
-            });
-            
-            // Close modal
-            closeModal.addEventListener('click', function() {
-                paymentModal.classList.remove('active');
-            });
-            
-            // Payment method selection
-            paymentOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    paymentOptions.forEach(opt => opt.classList.remove('selected'));
-                    this.classList.add('selected');
-                    selectedPaymentMethod = this.dataset.method;
-                });
-            });
-            
-            // Proceed to payment
-            proceedPayment.addEventListener('click', function() {
-                if (selectedPaymentMethod === 'credit-card') {
-                    // Redirect to payment page or show credit card form
-                    alert('Kredi kartı ödeme sayfasına yönlendiriliyorsunuz...');
-                    // window.location.href = 'https://your-payment-provider.com/payment';
-                } else {
-                    // Show bank transfer details
-                    alert('Banka hesap bilgileri sayfada gösterilmektedir. Havale yaptıktan sonra dekontu WhatsApp üzerinden iletiniz.');
-                }
-            });
-            
-            // Close modal when clicking outside
-            window.addEventListener('click', function(e) {
-                if (e.target === paymentModal) {
-                    paymentModal.classList.remove('active');
-                }
-            });
+        window.addEventListener('click', function(e) {
+            if (e.target === document.getElementById('paymentModal')) {
+                document.getElementById('paymentModal').classList.remove('active');
+            }
         });
+
+        // Instagram popup
+        function toggleInstagramPopup() {
+            const popup = document.getElementById('instagramPopup');
+            popup.classList.toggle('active');
+        }
     </script>
 </body>
-</html>
+</html> 
