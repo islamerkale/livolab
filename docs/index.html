@@ -3,559 +3,1938 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Move by HZ | Move with grace, feel your power</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>LivoLab - Online Pilates Eğitmeni</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        :root {
-            --primary: #FFD1DC; /* Pastel pembe */
-            --secondary: #E0F7FA; /* Pastel mavi */
-            --accent: #B2EBF2; /* Açık turkuaz */
-            --text: #616161; /* Gri metin */
-            --light: #FAFAFA; /* Beyaz */
-            --dark: #424242; /* Koyu gri */
-        }
-        
-        body {
-            font-family: 'Montserrat', sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
+            box-sizing: border-box;
         }
-        
-        /* Navbar Stili */
+
+        :root {
+            --primary: black;
+            --primary-foreground: #ffffff;
+            --background: #ffffff;
+            --foreground: black;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --green-100: #dcfce7;
+            --green-600: #16a34a;
+            --yellow-400: #facc15;
+            --border-radius: 0.625rem;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--foreground);
+            background-color: var(--background);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Navigation */
         .navbar {
-            background-color: var(--light);
-            padding: 15px 10%;
+            background: white;
+            border-bottom: 1px solid var(--gray-200);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .nav-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            height: 4rem;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-logo {
+            width: 12rem;
+            height: 3rem;
+            background: transparent;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .nav-title {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--gray-700);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--primary-foreground);
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--gray-300);
+        }
+
+        .btn-outline:hover {
+            background: var(--gray-50);
+        }
+
+        .btn-lg {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 0;
+            background: linear-gradient(to bottom right, var(--gray-50), white);
+        }
+
+        .hero-content {
+            display: grid;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 500;
+            color: var(--gray-900);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-title .text-primary {
+            color: var(--primary);
+            display: block;
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--gray-900);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .hero-badge {
+            position: absolute;
+            bottom: -1.5rem;
+            left: -1.5rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-badge-content {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .hero-badge-icon {
+            width: 3rem;
+            height: 3rem;
+            background: var(--green-100);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--green-600);
+        }
+
+        /* Quiz Section Styles */
+        .quiz-section {
+            padding: 5rem 0;
+            background: var(--gray-50);
         }
         
-        .logo img {
-            height: 70px;
-            width: auto;
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .quiz-step {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .quiz-step.active {
+            display: block;
+        }
+        
+        .quiz-question {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 500;
+            color: var(--gray-900);
+        }
+        
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .quiz-option {
+            padding: 1rem 1.5rem;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            background: white;
+        }
+        
+        .quiz-option:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .quiz-option.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .quiz-nav {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .quiz-result {
+            text-align: center;
+            display: none;
+            padding: 2rem;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .quiz-result h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+        }
+        
+        .quiz-result p {
+            margin-bottom: 2rem;
+            font-size: 1.125rem;
+            color: var(--gray-600);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Packages Section */
+        .packages {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 500;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+        }
+
+        .section-description {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            max-width: 42rem;
+            margin: 0 auto;
+        }
+
+        .packages-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .package-card {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .package-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .package-popular {
+            border-color: var(--primary);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -0.75rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+        }
+
+        .package-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .package-description {
+            color: var(--gray-600);
+            margin-bottom: 1.5rem;
+        }
+
+        .package-price-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .package-price-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            transition: all 0.3s;
+        }
+
+        .package-price-option:hover {
+            border-color: var(--primary);
+            background: var(--gray-50);
+            border: 5px solid black;
+        }
+
+        .package-price-option.selected {
+            border-color: var(--primary);
+            background: var(--gray-50);
+            border: 5px solid black;
+        }
+
+        .price-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 0.25rem;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        .price-original {
+            font-size: 1rem;
+            color: var(--gray-400);
+            text-decoration: line-through;
+        }
+
+        .package-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .package-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .package-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.875rem;
+            color: var(--gray-700);
+        }
+
+        .check-icon {
+            color: var(--green-600);
+            font-weight: bold;
+        }
+
+        /* About Section */
+        .about {
+            padding: 5rem 0;
+            background: var(--gray-50);
+        }
+
+        .about-content {
+            display: grid;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            font-weight: 500;
+            color: var(--gray-900);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .about-grid h4 {
+            font-weight: 500;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+
+        .about-grid ul {
+            list-style: none;
+            color: var(--gray-600);
+        }
+
+        .about-grid li {
+            margin-bottom: 0.25rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+        }
+
+        .testimonial-stars {
+            display: flex;
+            gap: 0.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .star {
+            color: var(--yellow-400);
+            font-size: 1.25rem;
+        }
+
+        .testimonial-text {
+            color: var(--gray-700);
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .testimonial-avatar {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .testimonial-info h4 {
+            font-weight: 500;
+            color: var(--gray-900);
+        }
+
+        .testimonial-info p {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        /* Pilates About Section */
+        .pilates-about {
+            padding: 5rem 0;
+            background: var(--gray-50);
+        }
+
+        .pilates-cards {
+            display: grid;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pilates-card {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .pilates-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .pilates-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .pilates-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+        }
+
+        .pilates-card p {
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+
+        /* Education Section */
+        .education {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .education-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .education-card {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .education-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .education-content h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--gray-900);
+        }
+
+        .education-content p {
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 5rem 0;
+            background: var(--primary);
+            color: white;
+        }
+
+        .contact-content {
+            display: grid;
+            gap: 3rem;
+        }
+
+        .contact h2 {
+            font-size: 2.5rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact p {
+            font-size: 1.25rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        .contact-info {
+            list-style: none;
+        }
+
+        .contact-info li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 2rem;
+        }
+
+        .contact-form h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-white-outline {
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+
+        .btn-white-outline:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        .contact-guarantee {
+            font-size: 0.875rem;
+            opacity: 0.8;
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgb(54, 54, 54);
+            color: white;
+            padding: 3rem 0;
+        }
+
+        .footer-content {
+            display: grid;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo {
+            width: 12rem;
+            height: 3rem;
+            background: transparent;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .footer-title {
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+
+        .footer-description {
+            color: var(--gray-400);
+            line-height: 1.6;
+        }
+
+        .footer-section h4 {
+            font-weight: 500;
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--gray-400);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--gray-800);
+            padding-top: 2rem;
+            text-align: center;
+            color: var(--gray-400);
+            font-size: 0.875rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Payment Modal Styles */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .payment-modal.active {
+            display: flex;
+        }
+        
+        .payment-content {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .payment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray-600);
+        }
+        
+        .payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .payment-option {
+            padding: 1rem;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            cursor: pointer;
             transition: all 0.3s ease;
         }
         
-        .logo img:hover {
-            transform: scale(1.05);
+        .payment-option:hover {
+            border-color: var(--primary);
         }
         
-        .nav-links {
-            display: flex;
-            gap: 30px;
+        .payment-option.selected {
+            border-color: var(--primary);
+            background: var(--gray-50);
         }
         
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text);
-            font-weight: 600;
-            font-size: 16px;
-            position: relative;
-            padding: 5px 0;
-            transition: all 0.3s;
+        .payment-details {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--gray-200);
         }
-        
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--accent);
-            transition: width 0.3s;
-        }
-        
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-        
-        .nav-links a:hover {
-            color: var(--dark);
-        }
-        
-        /* Hero Bölümü */
-        .hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            padding: 120px 10% 100px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover;
-            opacity: 0.15;
-            z-index: 0;
-        }
-        
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            color: var(--dark);
-            line-height: 1.2;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-        }
-        
-        .hero p {
-            font-size: 1.5rem;
-            margin: 0 auto 40px;
-            color: var(--dark);
-            max-width: 600px;
-        }
-        
-        .cta-button {
-            background-color: var(--accent);
-            color: var(--dark);
-            border: none;
-            padding: 15px 35px;
-            font-size: 1.1rem;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 600;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            background-color: #9de1eb;
-        }
-        
-        /* Paketler Bölümü */
-        .packages {
-            padding: 100px 10%;
-            text-align: center;
-            background-color: var(--light);
-        }
-        
-        .section-title {
-            margin-bottom: 70px;
-            position: relative;
-        }
-        
-        .section-title h2 {
-            font-size: 2.8rem;
-            color: var(--dark);
-            display: inline-block;
-            position: relative;
-        }
-        
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background-color: var(--accent);
-            border-radius: 2px;
-        }
-        
-        .package-cards {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-            margin-top: 50px;
-        }
-        
-        .card {
-            background-color: white;
-            border-radius: 20px;
-            padding: 40px 30px;
-            width: 350px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            transition: all 0.4s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-        }
-        
-        .card.diamond::before {
-            background: linear-gradient(90deg, #b0bec5, #eceff1);
-        }
-        
-        .card.gold::before {
-            background: linear-gradient(90deg, #FFD54F, #FFF9C4);
-        }
-        
-        .card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-        }
-        
-        .card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: var(--dark);
-        }
-        
-        .card ul {
-            text-align: left;
-            padding-left: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .card li {
-            margin-bottom: 12px;
-            position: relative;
-            padding-left: 25px;
-        }
-        
-        .card li::before {
-            content: '•';
-            color: var(--accent);
-            font-size: 1.5rem;
-            position: absolute;
-            left: 0;
-            top: -3px;
-        }
-        
-        .price {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin: 25px 0;
-            color: var(--dark);
-        }
-        
-        /* Hakkımda Bölümü */
-        .about {
-            background-color: var(--secondary);
-            padding: 100px 10%;
-            position: relative;
-        }
-        
-        .about-content {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .about h2 {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        
-        .about p {
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
-        
-        /* Eğitimler Bölümü */
-        .trainings {
-            padding: 100px 10%;
-            background: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover;
-            position: relative;
-            text-align: center;
-            color: white;
-        }
-        
-        .trainings::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(66, 66, 66, 0.85);
-        }
-        
-        .trainings .section-title h2 {
-            color: white;
-        }
-        
-        .trainings .section-title h2::after {
-            background-color: var(--primary);
-        }
-        
-        .training-list {
-            columns: 2;
-            column-gap: 60px;
-            max-width: 900px;
-            margin: 0 auto;
-            text-align: left;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .training-list ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        
-        .training-list li {
-            margin-bottom: 20px;
-            position: relative;
-            padding-left: 30px;
-            font-size: 1.1rem;
-            break-inside: avoid;
-        }
-        
-        .training-list li::before {
-            content: '✓';
-            color: var(--primary);
-            font-size: 1.3rem;
-            position: absolute;
-            left: 0;
-            top: -2px;
-        }
-        
-        /* İletişim Bölümü */
-        footer {
-            background-color: var(--dark);
-            color: white;
-            text-align: center;
-            padding: 60px 10% 40px;
-        }
-        
-        .footer-content {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin: 30px 0;
-        }
-        
-        .social-link {
-            color: white;
-            font-size: 1.8rem;
-            transition: all 0.3s;
-        }
-        
-        .social-link:hover {
-            transform: translateY(-5px);
-            color: var(--primary);
-        }
-        
-        .contact-info {
-            margin: 20px 0;
-            line-height: 1.8;
-        }
-        
-        .copyright {
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.7);
-        }
-        
-        /* Responsive Tasarım */
-        @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 2.8rem;
+
+        /* Responsive Design */
+        @media (min-width: 640px) {
+            .hero-buttons {
+                flex-direction: row;
             }
-            
-            .hero p {
-                font-size: 1.3rem;
+
+            .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
-            
-            .package-cards {
-                flex-direction: column;
-                align-items: center;
+
+            .pilates-cards {
+                grid-template-columns: repeat(2, 1fr);
             }
-            
-            .training-list {
-                columns: 1;
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
-        
-        @media (max-width: 768px) {
-            .navbar {
-                padding: 15px 5%;
-                flex-direction: column;
-            }
-            
-            .logo img {
-                height: 60px;
-                margin-bottom: 15px;
-            }
-            
+
+        @media (min-width: 768px) {
             .nav-links {
-                gap: 15px;
-                flex-wrap: wrap;
-                justify-content: center;
+                display: flex;
             }
-            
-            .hero {
-                padding: 100px 5% 80px;
+
+            .packages-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
-            
-            .hero h1 {
-                font-size: 2.2rem;
+
+            .education-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
-            
-            .hero p {
-                font-size: 1.1rem;
+
+            .footer-content {
+                grid-template-columns: repeat(3, 1fr);
             }
-            
-            .section-title h2 {
-                font-size: 2.2rem;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr 1fr;
             }
-            
-            .card {
-                width: 100%;
-                max-width: 350px;
+
+            .about-content {
+                grid-template-columns: 1fr 1fr;
             }
+
+            .packages-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .testimonials-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .pilates-cards {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 3rem;
+            }
+        }
+
+        .icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            display: inline-block;
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Navigation -->
     <nav class="navbar">
-        <div class="logo">
-            <img src="movebyhz.png" alt="Move by HZ Logo">
-        </div>
-             
-        <div class="nav-links">
-            <a href="#packages">Paketler</a>
-            <a href="#about">Hakkımda</a>
-            <a href="#trainings">Eğitimler</a>
-            <a href="#contact">İletişim</a>
+        <div class="nav-content">
+            <div class="nav-brand">
+                <div class="nav-logo">
+                    <img src="livolab.png" alt="Logo" style="width: 100%; height: 100%; object-fit: contain;">
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="#home">Ana Sayfa</a>
+                <a href="#packages">Paketler</a>
+                <a href="#about">Hakkımda</a>
+                <a href="#pilates">Pilates</a>
+                <a href="#education">Eğitimler</a>
+                <a href="#contact">İletişim</a>
+            </div>
+            <a href="#packages" class="btn btn-primary">Hemen Başla</a>
         </div>
     </nav>
-    
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Move with grace, feel your power</h1>
-            <p>Bedeninizi keşfedin, gücünüzü hissedin ve hareketin güzelliğini yaşayın.</p>
-            <button class="cta-button">Ücretsiz Deneme Dersi</button>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div>
+                    <span class="badge">Sertifikalı Pilates Eğitmeni</span>
+                    <h1 class="hero-title">
+                        Vücudunuzu
+                        <span class="text-primary">Online Pilates ile Dönüştürün</span>
+                    </h1>
+                    <p class="hero-description">
+                        Uzmanlıkla hazırlanmış online Pilates programlarımla binlerce öğrenciye güç, esneklik ve farkındalık kazandırdım.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#packages" class="btn btn-primary btn-lg">
+                            ▶ Yolculuğunuza Başlayın
+                        </a>
+                        <a href="#quiz" class="btn btn-outline btn-lg">Size Uygun Paketi Bulun</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Mutlu Öğrenci</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">3+</div>
+                            <div class="stat-label">Yıl Deneyim</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">4.9</div>
+                            <div class="stat-label">Ortalama Puan</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=700&fit=crop" alt="Hacer Zorlu Pilates dersi verirken" class="hero-img">
+                    <div class="hero-badge">
+                        <div class="hero-badge-content">
+                            <div class="hero-badge-icon">✓</div>
+                            <div>
+                                <div style="font-weight: 500;">Sertifikalı Eğitmen</div>
+                                <div style="font-size: 0.875rem; color: var(--gray-600);">TCF & Balanced Body</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
-    
-    <section class="packages" id="packages">
-        <div class="section-title">
-            <h2>Paketlerimiz</h2>
-        </div>
-        <div class="package-cards">
-            <div class="card diamond">
-                <h3>Diamond Üye 💎</h3>
-                <p>Başlangıç-orta seviye & Orta-ileri seviye</p>
-                <ul>
-                    <li>Eğitmeniniz sizinle bire bir ilgilenir</li>
-                    <li>Kişiye özel ders planı</li>
-                    <li>Haftaiçi belirli saatlerde eğitmene ulaşım</li>
-                    <li>Hediye stretching ders kaydı</li>
-                </ul>
-                <div class="price">Haftalık 3, ayda 12 ders: 14.000₺</div>
-                <div class="price">Haftalık 2, ayda 8 ders: 12.000₺</div>
-                <button class="cta-button">Kayıt Ol</button>
+
+    <!-- Quiz Section -->
+    <section id="quiz" class="quiz-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">5 Adımda Size Uygun Paketi Bulun</h2>
+                <p class="section-description">
+                    Kısa testimizi tamamlayın ve ihtiyaçlarınıza en uygun pilates paketini keşfedin.
+                </p>
             </div>
             
-            <div class="card gold">
-                <h3>Gold Üye 🏅</h3>
-                <p>Tüm seviyeler için uygun</p>
-                <ul>
-                    <li>Bire bir ve grup canlı online dersler</li>
-                    <li>Hediye stretching ders kaydı</li>
-                    <li>Haftada 2 mat pilates, 1 total body hitt</li>
-                    <li>WhatsApp grubunda eğitmen desteği</li>
-                </ul>
-                <div class="price">1 aylık 12 ders: 1.800₺</div>
-                <div class="price">2 aylık 24 ders: 2.700₺</div>
-                <div class="price">3 aylık 36 ders: 3.200₺</div>
-                <button class="cta-button">Kayıt Ol</button>
+            <div class="quiz-container">
+                <div class="quiz-steps">
+                    <!-- Step 1 -->
+                    <div class="quiz-step active" data-step="1">
+                        <h3 class="quiz-question">Pilates deneyiminiz var mı?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-value="beginner">Hayır, yeni başlıyorum</div>
+                            <div class="quiz-option" data-value="intermediate">Biraz deneyimim var</div>
+                            <div class="quiz-option" data-value="advanced">Düzenli olarak pilates yapıyorum</div>
+                        </div>
+                        <div class="quiz-nav">
+                            <button class="btn btn-outline" disabled>Geri</button>
+                            <button class="btn btn-primary quiz-next">İleri</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="quiz-step" data-step="2">
+                        <h3 class="quiz-question">Haftada kaç gün antrenman yapmayı planlıyorsunuz?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-value="1-2">2 gün</div>
+                            <div class="quiz-option" data-value="3">3 gün</div>
+                            
+                        </div>
+                        <div class="quiz-nav">
+                            <button class="btn btn-outline quiz-prev">Geri</button>
+                            <button class="btn btn-primary quiz-next">İleri</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="quiz-step" data-step="3">
+                        <h3 class="quiz-question">Herhangi bir omurga rahatsızlığınız var mı?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-value="yes">Evet</div>
+                            <div class="quiz-option" data-value="no">Hayır</div>
+                        </div>
+                        <div class="quiz-nav">
+                            <button class="btn btn-outline quiz-prev">Geri</button>
+                            <button class="btn btn-primary quiz-next">İleri</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 4 -->
+                    <div class="quiz-step" data-step="4">
+                        <h3 class="quiz-question">Hangi tür antrenmanı tercih edersiniz?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-value="group">Grup dersleri</div>
+                            <div class="quiz-option" data-value="personal">Bire bir özel ders</div>
+                            <div class="quiz-option" data-value="mixed">Karışık (hem grup hem özel)</div>
+                        </div>
+                        <div class="quiz-nav">
+                            <button class="btn btn-outline quiz-prev">Geri</button>
+                            <button class="btn btn-primary quiz-next">İleri</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 5 -->
+                    <div class="quiz-step" data-step="5">
+                        <h3 class="quiz-question">Hedefleriniz neler?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-value="health">Genel sağlık ve esneklik</div>
+                            <div class="quiz-option" data-value="posture">Duruş bozukluklarını düzeltme</div>
+                            <div class="quiz-option" data-value="fitness">Fitness ve güçlenme</div>
+                        </div>
+                        <div class="quiz-nav">
+                            <button class="btn btn-outline quiz-prev">Geri</button>
+                            <button class="btn btn-primary quiz-submit">Sonucu Gör</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Result -->
+                    <div class="quiz-result">
+                        <h3>Sizin İçin En Uygun Paket</h3>
+                        <p class="result-text"></p>
+                        <button class="btn btn-primary go-to-package">Paketi Görüntüle</button>
+                        <button class="btn btn-outline quiz-restart" style="margin-top: 20px;">Testi Tekrarla</button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
-    
-    <section class="about" id="about">
-        <div class="about-content">
-            <div class="section-title">
-                <h2>Hakkımda</h2>
+
+    <!-- Packages Section -->
+    <section id="packages" class="packages">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Online Pilates Paketleri</h2>
+                <p class="section-description">
+                    Fitness seviyenize ve hedeflerinize uygun mükemmel programı seçin. Tüm paketler ömür boyu erişim ve uzman rehberlik içerir.
+                </p>
             </div>
-            <p>Merhaba, ben Hacer! 2 Aralık 1997 Edremit doğumluyum. 2021 yılında FMV Işık Üniversitesi Tekstil ve Moda Tasarımı bölümünden mezun oldum. Hareketle kurduğum bağ 2021 yılında Pilates ile başladı. Aynı süreçte fitness ile de ilgilenmeye başladım ve hala aktif olarak her iki disiplini sürdürüyorum. 2023 Mayıs ayından itibaren ise Pilates eğitmenliğini profesyonel olarak yapmaktayım.</p>
             
-            <p>Eğitmenlik yolculuğumda önce özel ekollerden ve Türkiye Cimnastik Federasyonu'ndan eğitimler alarak başladım. Ardından dünyaca kabul görmüş Balanced Body® sistemine ait temel modül eğitimlerini ve çeşitli workshopları tamamladım. Bunlara ek olarak temel yoga ve aerial yoga eğitimlerim de mevcut. Her yıl, alanımda güncel bilgi ve tekniklerle kendimi geliştirmek adına seminer ve eğitimlere katılmaya özen gösteriyorum.</p>
-            
-            <p>Benim için egzersiz sadece bir fiziksel aktivite değil; ruhsal denge, zihinsel açıklık ve bedensel farkındalıkla bütünleşen bir yaşam biçimi. Sizi, bedeninizi daha yakından tanıyacağınız, kendinize iyi geleceğiniz bu yolculuğa davet ediyorum.</p>
+            <div class="packages-grid">
+                <!-- GOLD Package -->
+                <div class="package-card" id="gold-package">
+                    <h3 class="package-title">GOLD Paket 🏅</h3>
+                    <p class="package-description">"Tüm seviyeler için uygun" - Eğitmenle her seviye için uygun canlı online grup ders.</p>
+                    
+                    <div class="package-price-container">
+                        <div class="package-price-option" data-price="3045">
+                            <div class="price-info">
+                                <div class="price-label">1 aylık toplam 12 ders</div>
+                                <div class="price">3.045₺</div>
+                            </div>
+                        </div>
+                        <div class="package-price-option" data-price="4620">
+                            <div class="price-info">
+                                <div class="price-label">2 aylık toplam 24 ders</div>
+                                <div class="price">4.620₺</div>
+                            </div>
+                        </div>
+                        <div class="package-price-option" data-price="6510">
+                            <div class="price-info">
+                                <div class="price-label">3 aylık toplam 36 ders</div>
+                                <div class="price">6.510₺</div>
+                            </div>
+                        </div>
+                        <div class="package-price-option" data-price="685">
+                            <div class="price-info">
+                                <div class="price-label">1 haftalık katılım</div>
+                                <div class="price">685₺</div>
+                            </div>
+                        </div>
+                        <div class="package-price-option" data-price="240">
+                            <div class="price-info">
+                                <div class="price-label">Tek derslik katılım</div>
+                                <div class="price">240₺</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="package-meta">
+                        <span>📅 4 hafta</span>
+                        <span>👥 12 ders</span>
+                    </div>
+                    <ul class="package-features">
+                        <li><span class="check-icon">✓</span> Canlı online grup dersleri</li>
+                        <li><span class="check-icon">✓</span> Haftada 2 mat pilates + 1 cardio</li>
+                        <li><span class="check-icon">✓</span> WhatsApp grubunda destek</li>
+                        <li><span class="check-icon">✓</span> Minimum 5 kişilik grup</li>
+                        <li><span class="check-icon">✓</span> 45 dakikalık dersler</li>
+                    </ul>
+                    <button class="btn btn-outline select-package" data-package="gold" style="width: 100%; text-align: center;">Paketi Seç</button>
+                </div>
+
+                <!-- DIAMOND Package -->
+                <div class="package-card package-popular" id="diamond-package">
+                    <span class="popular-badge">En Popüler</span>
+                    <h3 class="package-title">DIAMOND Paket 💎</h3>
+                    <p class="package-description">Bire bir özel derslerle kişiselleştirilmiş program. Omurga sağlığı için ideal.</p>
+                    
+                    <div class="package-price-container">
+                        <div class="package-price-option" data-price="10080">
+                            <div class="price-info">
+                                <div class="price-label">Haftalık 2, ayda 8 ders</div>
+                                <div class="price">10.080₺</div>
+                            </div>
+                        </div>
+                        <div class="package-price-option" data-price="12600">
+                            <div class="price-info">
+                                <div class="price-label">Haftalık 3, ayda 12 ders</div>
+                                <div class="price">12.600₺</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="package-meta">
+                        <span>📅 4 hafta</span>
+                        <span>👤 8 özel ders</span>
+                    </div>
+                    <ul class="package-features">
+                        <li><span class="check-icon">✓</span> Bire bir canlı online dersler</li>
+                        <li><span class="check-icon">✓</span> Kişiye özel program</li>
+                        <li><span class="check-icon">✓</span> Hediye stretching dersi</li>
+                        <li><span class="check-icon">✓</span> WhatsApp'ta iletişim</li>
+                        <li><span class="check-icon">✓</span> Omurga sağlığına özel</li>
+                    </ul>
+                    <button class="btn btn-primary select-package" data-package="diamond" style="width: 100%; text-align: center;">Paketi Seç</button>
+                </div>
+
+                <!-- VIP Package -->
+                <div class="package-card" id="vip-package">
+                    <h3 class="package-title">VIP Paket 🎖️</h3>
+                    <p class="package-description">"Eğitmen şehrinde" - En kapsamlı deneyim. Özel dersler, açık hava antrenmanları ve düzenli değerlendirmeler.</p>
+                    
+                    <div class="package-price-container">
+                        <div class="package-price-option" data-price="11970">
+                            <div class="price-info">
+                                <div class="price-label">Haftalık 2, ayda 8 ders</div>
+                                <div class="price">11.970₺</div>
+                            </div>
+                        </div>
+                        <div class="package-price-option" data-price="15750">
+                            <div class="price-info">
+                                <div class="price-label">Haftalık 3, ayda 12 ders</div>
+                                <div class="price">15.750₺</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="package-meta">
+                        <span>📅 4 hafta</span>
+                        <span>👑 8 VIP ders</span>
+                    </div>
+                    <ul class="package-features">
+                        <li><span class="check-icon">✓</span> Bire bir canlı dersler</li>
+                        <li><span class="check-icon">✓</span> Açık havada cardio/pilates</li>
+                        <li><span class="check-icon">✓</span> Aylık durum değerlendirmesi</li>
+                        <li><span class="check-icon">✓</span> Hediye stretching dersi</li>
+                        <li><span class="check-icon">✓</span> 7/24 WhatsApp desteği</li>
+                    </ul>
+                    <button class="btn btn-outline select-package" data-package="vip" style="width: 100%; text-align: center;">Paketi Seç</button>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 30px; font-size: 12px; color: var(--gray-600);">*Tüm dersler kadınlar özelindedir.</p>
         </div>
     </section>
-    
-    <section class="trainings" id="trainings">
-        <div class="section-title">
-            <h2>Profesyonel Eğitimlerim</h2>
+
+    <!-- Payment Modal -->
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-content">
+            <div class="payment-header">
+                <h3>Ödeme Yap</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="selected-package-info">
+                <h4 id="selectedPackageName"></h4>
+                <p id="selectedPackageDescription"></p>
+                <p id="selectedPackagePrice" style="font-size: 1.5rem; font-weight: 600; margin: 1rem 0;"></p>
+            </div>
+            <div class="payment-options">
+                <div class="payment-option selected" data-method="credit-card">
+                    <h4>Kredi Kartı</h4>
+                    <p>Güvenli ödeme ile anında başlayın</p>
+                </div>
+                <div class="payment-option" data-method="bank-transfer">
+                    <h4>Banka Havalesi</h4>
+                    <p>Havale ile ödeme yapın</p>
+                </div>
+            </div>
+            <div class="payment-details">
+               </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;" id="proceedPayment">Ödemeye Devam Et</button>
         </div>
-        <div class="training-list">
-            <ul>
-                <li>TCF 1. Kademe Yardımcı Eğitmen (Bursa)</li>
-                <li>Balanced Body Baps Academy Module Mat 1</li>
-                <li>Balanced Body Baps Academy Module 1</li>
-                <li>Balanced Body Baps Academy Module Mat 2</li>
-                <li>Balanced Body Baps Academy Module Reformer 2</li>
-                <li>Baps Academy Special Condition Workshop</li>
-                <li>Australia Sports Institute & Fitness Academy Level 1 Pilates Trainer (Mat,Reformer,Tower Pilates)</li>
-                <li>Australia Sports Institute & Fitness Academy "Yoga Fly"</li>
-                <li>VOB Pilates Academy "Kifotik Postür ve Egzersiz Stratejileri"</li>
-                <li>Bilginet Academy "Fit Nefes Koçluğu"</li>
-                <li>Bilginet Academy "Hamile Yogası"</li>
-            </ul>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div>
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=500&fit=crop" alt="Hacer Zorlu Pilates stüdyosunda" class="about-image">
+                </div>
+                <div class="about-text">
+                    <span class="badge">Eğitmeninizi Tanıyın</span>
+                    <h2>Hacer ZORLU</h2>
+                    <p>
+                        2 Aralık 1997 Edremit doğumluyum. 2021 yılında Işık Üniversitesi Tekstil ve Moda Tasarımı bölümünden mezun oldum. Aynı yıl Pilates ile tanıştım; bu süreçte fitness ile de ilgilenmeye başladım ve hala her iki disiplini aktif olarak sürdürüyorum.
+                    </p>
+                    <p>
+                        2023 Mayıs'tan bu yana profesyonel Pilates eğitmenliği yapıyorum. Eğitim yolculuğuma özel ekollerle başladım, ardından TCF ve Balanced Body sistemine ait temel modül eğitimlerini ve çeşitli workshopları tamamladım.
+                    </p>
+                    <div class="about-grid">
+                        <div>
+                            <h4>Sertifikalar</h4>
+                            <ul>
+                                <li>• TCF 1. Kademe Yardımcı Eğitmen</li>
+                                <li>• Balanced Body Modül 1 & 2</li>
+                                <li>• Australia Sports Institute</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>Uzmanlık Alanları</h4>
+                            <ul>
+                                <li>• Core Güçlendirme</li>
+                                <li>• Omurga Sağlığı</li>
+                                <li>• Esneklik Eğitimi</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
-    
-    <footer id="contact">
-        <div class="footer-content">
-            <h3>Move by HZ</h3>
-            <p class="slogan">"Move with grace, feel your power"</p>
-            
-            <div class="social-links">
-                <a href="https://instagram.com/movebyhz" class="social-link" target="_blank">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://wa.me/905555555555" class="social-link" target="_blank">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-                <a href="mailto:info@movebyhz.com" class="social-link">
-                    <i class="far fa-envelope"></i>
-                </a>
+
+    <!-- Pilates About Section -->
+    <section id="pilates" class="pilates-about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Pilates Hakkında</h2>
+                <p class="section-description">Joseph Pilates'in eşsiz vücut kondisyonlama yöntemi hakkında bilmeniz gerekenler</p>
             </div>
             
-            <div class="contact-info">
-                <p><i class="fas fa-phone-alt"></i> +90 555 555 55 55</p>
-                <p><i class="fas fa-envelope"></i> info@movebyhz.com</p>
+            <div class="pilates-cards">
+                <div class="pilates-card">
+                    <div class="pilates-icon">?</div>
+                    <h3>Pilates Nedir?</h3>
+                    <p>Pilates, Joseph H. Pilates tarafından geliştirilen, nefesle uyumlu ve kontrollü hareketlerden oluşan bir egzersiz sistemidir. Bedenin dengeli şekilde güçlenmesini, esnemesini ve duruşun iyileşmesini sağlar.</p>
+                </div>
+                
+                <div class="pilates-card">
+                    <div class="pilates-icon"><i class="fas fa-spa"></i></div>
+                    <h3>Omurga Sağlığı</h3>
+                    <p>Omurga rahatsızlığı olan bireyler için Pilates, ağrıları hafifletir, postürü düzeltir ve omurgayı destekleyen kasları güvenli şekilde güçlendirir. Skolyoz, disk kayması gibi durumlarda uzman eşliğinde faydalı bir destek sağlar.</p>
+                </div>
+                
+                <div class="pilates-card">
+                    <div class="pilates-icon"><i class="fas fa-users"></i></div>
+                    <h3>Kimler Yapabilir?</h3>
+                    <p>Her yaştan kadın ve erkek, egzersiz geçmişi olmasa bile Pilates yapabilir. Hamileler, yaşlılar ve rehabilitasyon sürecindekiler için de uygundur. Ciddi sağlık sorunlarında hekim onayı önerilir.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="education">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Eğitimlerim</h2>
+                <p class="section-description">Sürekli gelişim ve uzmanlaşma yolculuğum</p>
             </div>
             
-            <div class="copyright">
-                <p>© 2023 Move by HZ. Tüm hakları saklıdır.</p>
+            <div class="education-grid">
+                <div class="education-card">
+                    <div class="education-icon"><i class="fas fa-medal"></i></div>
+                    <div class="education-content">
+                        <h3>TCF 1. Kademe Yardımcı Eğitmen (Bursa)</h3>
+                        <p>Eğitmenlik yolculuğumda önce özel ekollerden ve Türkiye Cimnastik Federasyonu'ndan eğitimler alarak başladım.</p>
+                    </div>
+                </div>
+                
+                <div class="education-card">
+                    <div class="education-icon"><i class="fas fa-medal"></i></div>
+                    <div class="education-content">
+                        <h3>Balanced Body Baps Academy Module Mat 1</h3>
+                        <p>Dünyaca kabul görmüş Balanced Body sistemine ait temel modül eğitimlerini tamamladım.</p>
+                    </div>
+                </div>
+                
+                <div class="education-card">
+                    <div class="education-icon"><i class="fas fa-medal"></i></div>
+                    <div class="education-content">
+                        <h3>Balanced Body Baps Academy Module 1</h3>
+                        <p>Balanced Body sisteminin temel eğitimlerini içeren bu modülü başarıyla tamamladım.</p>
+                    </div>
+                </div>
+                
+                <div class="education-card">
+                    <div class="education-icon"><i class="fas fa-medal"></i></div>
+                    <div class="education-content">
+                        <h3>Balanced Body Baps Academy Module Mat 2</h3>
+                        <p>Mat pilates alanında ileri seviye eğitimler içeren bu modülü tamamladım.</p>
+                    </div>
+                </div>
+                
+                <div class="education-card">
+                    <div class="education-icon"><i class="fas fa-medal"></i></div>
+                    <div class="education-content">
+                        <h3>Balanced Body Baps Academy Module Reformer 2</h3>
+                        <p>Reformer cihazı ile ileri seviye pilates eğitimleri içeren bu modülü tamamladım.</p>
+                    </div>
+                </div>
+                
+                <div class="education-card">
+                    <div class="education-icon"><i class="fas fa-medal"></i></div>
+                    <div class="education-content">
+                        <h3>Australia Sports Institute Level 1 Pilates Trainer</h3>
+                        <p>Uluslararası geçerliliği olan bu kapsamlı eğitimi başarıyla tamamladım.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Öğrenci Yorumları</h2>
+                
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <p class="testimonial-text">
+                        "Hacer'in online dersleri duruşumu ve gücümü değiştirdi. GOLD paket Pilates yolculuğuma başlamak için mükemmeldi!"
+                    </p>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b5bb?w=80&h=80&fit=crop&crop=face" alt="Ayşe Yılmaz" class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Ayşe Yılmaz</h4>
+                            <p>Doğrulanmış Öğrenci</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <p class="testimonial-text">
+                        "DIAMOND paket inanılmaz. Hiç bu kadar güçlü ve dengeli hissetmemiştim. Kesinlikle tavsiye ediyorum!"
+                    </p>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face" alt="Zeynep Kaya" class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Zeynep Kaya</h4>
+                            <p>Doğrulanmış Öğrenci</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <p class="testimonial-text">
+                        "Profesyonel eğitim ve net açıklamalar. Ömür boyu erişim mükemmel bir değer sunuyor!"
+                    </p>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=80&h=80&fit=crop&crop=face" alt="Elif Demir" class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Elif Demir</h4>
+                            <p>Doğrulanmış Öğrenci</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-content">
+                <div>
+                    <h2>Yolculuğunuza Başlamaya Hazır mısınız?</h2>
+                    <p>
+                        Dönüştürücü bir Pilates deneyimi için bana katılın. Paketinizi seçin ve bugün güç, esneklik ve farkındalık inşa etmeye başlayın.
+                    </p>
+                    <ul class="contact-info">
+                        <li>
+                            <span>✉</span>
+                            <span>livolab25@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="contact-form">
+                    <h3>Hemen Başlayın</h3>
+                    <div class="contact-buttons">
+                        <a href="#packages" class="btn btn-secondary btn-lg">Tüm Paketleri Görüntüle</a>
+                        <a href="mailto:hacercelen97@gmail.com" class="btn btn-white-outline btn-lg">Danışma Randevusu Al</a>
+                    </div>
+                    <p class="contact-guarantee">
+                       
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-brand">
+                        <div class="footer-logo">
+                            <img src="livolab-white.png" alt="Logo" style="width: 100%; height: 100%; object-fit: contain;">
+                        </div>
+                    </div>
+                    <p class="footer-description">
+                        Profesyonel online Pilates eğitimi ile bedeninizi ve zihninizi dönüştürün.
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4>Hızlı Bağlantılar</h4>
+                    <ul>
+                        <li><a href="#packages">Paketler</a></li>
+                        <li><a href="#about">Hakkımda</a></li>
+                        <li><a href="#pilates">Pilates</a></li>
+                        <li><a href="#contact">İletişim</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Hizmetlerimiz</h4>
+                    <ul>
+                        <li>Online Grup Dersleri</li>
+                        <li>Birebir Özel Dersler</li>
+                        <li>Omurga Sağlığı Programları</li>
+                        <li>Esneklik Eğitimleri</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>İletişim</h4>
+                    <ul>
+                        <li>livolab25@gmail.com</li>
+                        <li class="social-links">
+                            <a href="https://www.instagram.com/livolab_/" target="_blank" class="social-link">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="20" height="20">
+                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 LivoLab. Tüm hakları saklıdır. <a href="https://www.instagram.com/bigsparkmedia/" target="_blank" style="color: var(--gray-400);">Big Spark Media</a> tarafından geliştirilmiştir.</p>
             </div>
         </div>
     </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+            } else {
+                navbar.style.boxShadow = 'none';
+            }
+        });
+
+        // Quiz functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const quizSteps = document.querySelectorAll('.quiz-step');
+            const quizOptions = document.querySelectorAll('.quiz-option');
+            const nextButtons = document.querySelectorAll('.quiz-next');
+            const prevButtons = document.querySelectorAll('.quiz-prev');
+            const submitButton = document.querySelector('.quiz-submit');
+            const restartButton = document.querySelector('.quiz-restart');
+            const goToPackageButton = document.querySelector('.go-to-package');
+            const resultText = document.querySelector('.result-text');
+            const quizResult = document.querySelector('.quiz-result');
+            
+            let currentStep = 1;
+            const answers = {};
+            
+            // Initialize first step
+            showStep(currentStep);
+            
+            // Option selection
+            quizOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options in this step
+                    const stepOptions = this.closest('.quiz-step').querySelectorAll('.quiz-option');
+                    stepOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Store answer
+                    const step = this.closest('.quiz-step').dataset.step;
+                    answers[step] = this.dataset.value;
+                });
+            });
+            
+            // Next button
+            nextButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const currentStepElement = this.closest('.quiz-step');
+                    const step = currentStepElement.dataset.step;
+                    
+                    // Validate selection
+                    if (!answers[step]) {
+                        alert('Lütfen bir seçenek seçiniz.');
+                        return;
+                    }
+                    
+                    currentStep++;
+                    showStep(currentStep);
+                });
+            });
+            
+            // Previous button
+            prevButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    currentStep--;
+                    showStep(currentStep);
+                });
+            });
+            
+            // Submit button
+            if (submitButton) {
+                submitButton.addEventListener('click', function() {
+                    const currentStepElement = this.closest('.quiz-step');
+                    const step = currentStepElement.dataset.step;
+                    
+                    // Validate selection
+                    if (!answers[step]) {
+                        alert('Lütfen bir seçenek seçiniz.');
+                        return;
+                    }
+                    
+                    // Calculate result
+                    const result = calculateResult();
+                    showResult(result);
+                });
+            }
+            
+            // Go to package button
+            if (goToPackageButton) {
+                goToPackageButton.addEventListener('click', function() {
+                    const result = calculateResult();
+                    const packageId = result.toLowerCase() + '-package';
+                    const packageElement = document.getElementById(packageId);
+                    
+                    if (packageElement) {
+                        // Close quiz result
+                        quizResult.style.display = 'none';
+                        
+                        // Scroll to the package
+                        packageElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                        
+                        // Add highlight effect
+                        packageElement.style.boxShadow = '0 0 0 4px rgba(0,0,0,0.2)';
+                        setTimeout(() => {
+                            packageElement.style.boxShadow = '';
+                        }, 2000);
+                    }
+                });
+            }
+            
+            // Restart button
+            if (restartButton) {
+                restartButton.addEventListener('click', function() {
+                    // Reset answers
+                    for (let key in answers) {
+                        delete answers[key];
+                    }
+                    
+                    // Reset UI
+                    quizOptions.forEach(option => option.classList.remove('selected'));
+                    quizResult.style.display = 'none';
+                    
+                    // Go to first step
+                    currentStep = 1;
+                    showStep(currentStep);
+                });
+            }
+            
+            // Show step function
+            function showStep(step) {
+                quizSteps.forEach(stepElement => {
+                    stepElement.classList.remove('active');
+                });
+                
+                const stepElement = document.querySelector(`.quiz-step[data-step="${step}"]`);
+                stepElement.classList.add('active');
+                
+                // Hide/show navigation buttons
+                const prevButton = stepElement.querySelector('.quiz-prev');
+                const nextButton = stepElement.querySelector('.quiz-next');
+                
+                if (prevButton) {
+                    prevButton.style.visibility = step === '1' ? 'hidden' : 'visible';
+                }
+            }
+            
+            // Calculate result function
+            function calculateResult() {
+                // Enhanced logic based on user answers
+                if (answers['4'] === 'group') {
+                    return 'GOLD';
+                } else if (answers['4'] === 'personal' && answers['3'] === 'yes') {
+                    return 'DIAMOND';
+                } else if (answers['4'] === 'personal' || answers['4'] === 'mixed') {
+                    return 'VIP';
+                } else if (answers['5'] === 'posture' && answers['3'] === 'yes') {
+                    return 'DIAMOND';
+                } else if (answers['5'] === 'fitness' && answers['2'] === '4+') {
+                    return 'VIP';
+                } else {
+                    return 'GOLD';
+                }
+            }
+            
+            // Show result function
+            function showResult(result) {
+                const resultStep = document.querySelector('.quiz-result');
+                const activeStep = document.querySelector('.quiz-step.active');
+                
+                activeStep.classList.remove('active');
+                resultStep.style.display = 'block';
+                
+                // Set result text based on the package
+                let packageDescription = '';
+                
+                switch(result) {
+                    case 'GOLD':
+                        packageDescription = 'GOLD paketi, grup dersleriyle başlamak isteyenler için idealdir. Haftada 3 gün ders ve WhatsApp desteği ile pilates yolculuğunuza başlayın.';
+                        break;
+                    case 'DIAMOND':
+                        packageDescription = 'DIAMOND paketi, bire bir özel derslerle omurga sağlığınızı desteklemek isteyenler için mükemmel bir seçim. Kişiye özel program ve daha fazla eğitmen desteği sunar.';
+                        break;
+                    case 'VIP':
+                        packageDescription = 'VIP paketi, en kapsamlı deneyimi sunar. Bire bir derslerin yanı sıra açık havada antrenman ve düzenli değerlendirmelerle maksimum fayda sağlarsınız.';
+                        break;
+                    default:
+                        packageDescription = 'GOLD paketi, grup dersleriyle başlamak isteyenler için idealdir.';
+                }
+                
+                resultText.textContent = packageDescription;
+            }
+        });
+
+        // Package selection and payment modal
+        document.addEventListener('DOMContentLoaded', function() {
+            const packageButtons = document.querySelectorAll('.select-package');
+            const paymentModal = document.getElementById('paymentModal');
+            const closeModal = document.querySelector('.close-modal');
+            const selectedPackageName = document.getElementById('selectedPackageName');
+            const selectedPackageDescription = document.getElementById('selectedPackageDescription');
+            const selectedPackagePrice = document.getElementById('selectedPackagePrice');
+            const paymentOptions = document.querySelectorAll('.payment-option');
+            const proceedPayment = document.getElementById('proceedPayment');
+            const priceOptions = document.querySelectorAll('.package-price-option');
+            
+            let selectedPackage = '';
+            let selectedPaymentMethod = 'credit-card';
+            let selectedPrice = '';
+            
+            // Price option selection
+            priceOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options in the same package
+                    const packageCard = this.closest('.package-card');
+                    const packagePriceOptions = packageCard.querySelectorAll('.package-price-option');
+                    packagePriceOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Store selected price
+                    selectedPrice = this.dataset.price;
+                });
+            });
+            
+            // Package selection
+            packageButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    selectedPackage = this.dataset.package;
+                    
+                    // Check if a price option is selected
+                    const packageCard = this.closest('.package-card');
+                    const selectedPriceOption = packageCard.querySelector('.package-price-option.selected');
+                    
+                    if (!selectedPriceOption) {
+                        alert('Lütfen bir fiyat seçeneği seçiniz.');
+                        return;
+                    }
+                    
+                    selectedPrice = selectedPriceOption.dataset.price;
+                    
+                    // Set modal content based on selected package
+                    switch(selectedPackage) {
+                        case 'gold':
+                            selectedPackageName.textContent = 'GOLD Paket 🏅';
+                            selectedPackageDescription.textContent = '"Tüm seviyeler için uygun" - Eğitmenle her seviye için uygun canlı online grup ders.';
+                            break;
+                        case 'diamond':
+                            selectedPackageName.textContent = 'DIAMOND Paket 💎';
+                            selectedPackageDescription.textContent = 'Bire bir özel derslerle kişiselleştirilmiş program. Omurga sağlığı için ideal.';
+                            break;
+                        case 'vip':
+                            selectedPackageName.textContent = 'VIP Paket 🎖️';
+                            selectedPackageDescription.textContent = '"Eğitmen şehrinde" - En kapsamlı deneyim. Özel dersler, açık hava antrenmanları ve düzenli değerlendirmeler.';
+                            break;
+                    }
+                    
+                    // Set price
+                    selectedPackagePrice.textContent = `${selectedPrice}₺`;
+                    
+                    // Show modal
+                    paymentModal.classList.add('active');
+                });
+            });
+            
+            // Close modal
+            closeModal.addEventListener('click', function() {
+                paymentModal.classList.remove('active');
+            });
+            
+            // Payment method selection
+            paymentOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    paymentOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedPaymentMethod = this.dataset.method;
+                });
+            });
+            
+            // Proceed to payment
+            proceedPayment.addEventListener('click', function() {
+                if (selectedPaymentMethod === 'credit-card') {
+                    // Redirect to payment page or show credit card form
+                    alert('Kredi kartı ödeme sayfasına yönlendiriliyorsunuz...');
+                    // window.location.href = 'https://your-payment-provider.com/payment';
+                } else {
+                    // Show bank transfer details
+                    alert('Banka hesap bilgileri sayfada gösterilmektedir. Havale yaptıktan sonra dekontu WhatsApp üzerinden iletiniz.');
+                }
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(e) {
+                if (e.target === paymentModal) {
+                    paymentModal.classList.remove('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
