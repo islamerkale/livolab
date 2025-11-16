@@ -78,6 +78,7 @@
 
         /* Navigation */
         .navbar {
+            margin-top: 20px;
             background: transparent;
             backdrop-filter: blur(10px);
             position: fixed;
@@ -88,6 +89,7 @@
         }
 
         .navbar.scrolled {
+            margin-top: 0px;
             background: rgba(255, 255, 255, 0.95);
             border-bottom: 2px solid var(--primary-light);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -104,33 +106,58 @@
         }
 
         .nav-brand {
-            font-size: 1.5rem;
-            font-weight: 600;
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: 40px;
             cursor: pointer;
             transition: transform 0.3s;
             border-radius: 0.5rem;
             padding: 0.5rem;
-            color: var(--background);
-        }
-
-        .navbar.scrolled .nav-brand {
-            color: var(--primary);
         }
 
         .nav-brand:hover {
             transform: scale(1.05);
             background: var(--primary);
-            color: var(--background);
         }
 
         .navbar.scrolled .nav-brand:hover {
             background: var(--primary);
-            color: var(--background);
+        }
+
+        .nav-logo-default,
+        .nav-logo-scrolled {
+            height: 50px;
+            width: auto;
+            transition: opacity 0.3s ease;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .navbar:not(.scrolled) .nav-logo-default {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .navbar:not(.scrolled) .nav-logo-scrolled {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .navbar.scrolled .nav-logo-default {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .navbar.scrolled .nav-logo-scrolled {
+            opacity: 1;
+            visibility: visible;
         }
 
         .nav-links {
             display: none;
-            gap: 2rem;
+            gap: 1rem;
         }
 
         .nav-links a {
@@ -213,12 +240,10 @@
             align-items: center;
         }
 
-        .hero-content {
+        .hero-content-wrapper {
             display: grid;
+            grid-template-columns: 1fr;
             gap: 3rem;
-            align-items: center;
-            position: relative;
-            z-index: 1;
         }
 
         .badge {
@@ -231,7 +256,9 @@
             margin-bottom: 1rem;
             animation: float 3s ease-in-out infinite;
         }
-
+        .quiz-next {
+    border: 2px solid black !important;
+}
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
@@ -247,7 +274,7 @@
         }
 
         .hero-description {
-            font-size: 1.25rem;
+            font-size: 1rem;
             color: var(--background);
             margin-bottom: 2rem;
             animation: fadeInUp 0.8s ease 0.2s forwards;
@@ -294,67 +321,6 @@
         }
 
         .stat:hover .stat-label {
-            color: var(--primary);
-        }
-
-        .hero-image {
-            position: relative;
-            display: none;
-        }
-
-        .hero-img {
-            width: 100%;
-            height: 600px;
-            object-fit: cover;
-            border-radius: 1.5rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            transition: transform 0.5s ease;
-            border: 4px solid var(--primary-light);
-        }
-
-        .hero-img:hover {
-            transform: scale(1.02);
-        }
-
-        .hero-badge {
-            position: absolute;
-            bottom: -1.5rem;
-            left: -1.5rem;
-            background: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 1rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            animation: float 3s ease-in-out infinite;
-            border: 3px solid var(--primary-light);
-            transition: all 0.3s;
-        }
-
-        .hero-badge:hover {
-            background: var(--primary);
-            color: var(--background);
-            transform: scale(1.05);
-        }
-
-        .hero-badge-content {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .hero-badge-icon {
-            width: 3rem;
-            height: 3rem;
-            background: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--background);
-            transition: all 0.3s;
-        }
-
-        .hero-badge:hover .hero-badge-icon {
-            background: var(--background);
             color: var(--primary);
         }
 
@@ -422,144 +388,23 @@
         }
 
         /* Education Icons */
-        .education-icon-1 {
-            background: linear-gradient(135deg, #333333, #666666);
-            color: var(--background);
-        }
+        .education-icon-1 { background: linear-gradient(135deg, #333333, #666666); }
+        .education-icon-2 { background: linear-gradient(135deg, #000000, #333333); }
+        .education-icon-3 { background: linear-gradient(135deg, #666666, #333333); }
+        .education-icon-4 { background: linear-gradient(135deg, #333333, #000000); }
+        .education-icon-5 { background: linear-gradient(135deg, #000000, #666666); }
+        .education-icon-6 { background: linear-gradient(135deg, #666666, #000000); }
+        .education-icon-7 { background: linear-gradient(135deg, #333333, #666666); }
+        .education-icon-8 { background: linear-gradient(135deg, #000000, #333333); }
+        .education-icon-9 { background: linear-gradient(135deg, #666666, #333333); }
+        .education-icon-10 { background: linear-gradient(135deg, #333333, #000000); }
 
-        .education-icon-2 {
-            background: linear-gradient(135deg, #000000, #333333);
-            color: var(--background);
-        }
-
-        .education-icon-3 {
-            background: linear-gradient(135deg, #666666, #333333);
-            color: var(--background);
-        }
-
-        .education-icon-4 {
-            background: linear-gradient(135deg, #333333, #000000);
-            color: var(--background);
-        }
-
-        .education-icon-5 {
-            background: linear-gradient(135deg, #000000, #666666);
-            color: var(--background);
-        }
-
-        .education-icon-6 {
-            background: linear-gradient(135deg, #666666, #000000);
-            color: var(--background);
-        }
-        .education-icon-7 {
-            background: linear-gradient(135deg, #666666, #000000);
-            color: var(--background);
-        }
-        .education-icon-8 {
-            background: linear-gradient(135deg, #666666, #000000);
-            color: var(--background);
-        }
         /* Info Icons */
-        .info-icon-1 {
-            background: linear-gradient(135deg, #333333, #000000);
-            color: var(--background);
-        }
+        .info-icon-1 { background: linear-gradient(135deg, #333333, #000000); }
+        .info-icon-2 { background: linear-gradient(135deg, #000000, #333333); }
+        .info-icon-3 { background: linear-gradient(135deg, #666666, #333333); }
 
-        .info-icon-2 {
-            background: linear-gradient(135deg, #000000, #333333);
-            color: var(--background);
-        }
-
-        .info-icon-3 {
-            background: linear-gradient(135deg, #666666, #333333);
-            color: var(--background);
-        }
-
-        /* LIVO Section */
-        .livo-section {
-            padding: 5rem 0;
-            background: var(--secondary);
-        }
-
-        .livo-grid {
-            display: grid;
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .livo-card {
-            background: var(--card-bg);
-            border: 3px solid var(--primary-light);
-            border-radius: 1.5rem;
-            padding: 2.5rem;
-            text-align: center;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .livo-card:hover {
-            transform: translateY(-10px);
-            background: var(--primary);
-            color: var(--background);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        .livo-card:hover .custom-icon {
-            transform: scale(1.2) rotate(10deg);
-        }
-
-        .livo-letter {
-            font-size: 4rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--primary);
-            transition: all 0.3s;
-        }
-
-        .livo-card:hover .livo-letter {
-            color: var(--background);
-        }
-
-        .livo-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--primary);
-            transition: all 0.3s;
-        }
-
-        .livo-card:hover .livo-title {
-            color: var(--background);
-        }
-
-        .livo-quote {
-            font-size: 1.125rem;
-            font-style: italic;
-            margin-bottom: 1.5rem;
-            color: var(--accent);
-            transition: all 0.3s;
-        }
-
-        .livo-card:hover .livo-quote {
-            color: var(--secondary);
-        }
-
-        .livo-description {
-            color: var(--foreground);
-            transition: all 0.3s;
-        }
-
-        .livo-card:hover .livo-description {
-            color: var(--background);
-        }
-
-        /* Quiz Section */
-        .quiz-section {
-            padding: 5rem 0;
-            background: var(--secondary);
-        }
-
+        /* Section Common Styles */
         .section-header {
             text-align: center;
             margin-bottom: 4rem;
@@ -579,10 +424,15 @@
             margin: 0 auto;
         }
 
+        /* Quiz Section */
+        .quiz-section {
+            padding: 5rem 0;
+            background: var(--secondary);
+        }
+
         .quiz-container {
             max-width: 800px;
             margin: 0 auto;
-            
         }
 
         .quiz-step {
@@ -683,26 +533,32 @@
         }
 
         @keyframes zoomIn {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        .quiz-result h3 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+        /* Quiz geri tuşu için özel class */
+        .quiz-back-btn {
             color: var(--primary);
+            background: var(--background);
+            border: 2px solid var(--primary);
         }
 
-        .quiz-result p {
-            margin-bottom: 2rem;
-            font-size: 1.125rem;
-            color: var(--foreground);
+        .quiz-back-btn:hover {
+            background: var(--primary);
+            color: var(--background);
+        }
+
+        /* Quiz "Size Uygun Paketi Bulun" butonu için özel class */
+        .quiz-find-package-btn {
+            color: var(--background);
+            background: transparent;
+            border: 2px solid var(--background);
+        }
+
+        .quiz-find-package-btn:hover {
+            background: var(--background);
+            color: var(--primary);
         }
 
         /* Packages Section */
@@ -744,7 +600,6 @@
         .popular-badge {
             position: absolute;
             top: -1rem;
-            left: 50%;
             transform: translateX(-50%);
             background: var(--primary);
             color: var(--background);
@@ -893,7 +748,7 @@
 
         .about-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 1.5rem;
             margin-top: 2rem;
         }
@@ -967,14 +822,6 @@
             transition: all 0.6s ease-out;
         }
 
-        .education-card:nth-child(odd).animate {
-            transform: translateX(0);
-        }
-
-        .education-card:nth-child(even).animate {
-            transform: translateX(0);
-        }
-
         .education-card:hover {
             transform: translateY(-5px) translateX(10px);
             background: var(--primary);
@@ -986,7 +833,6 @@
             transform: scale(1.2) rotate(360deg);
         }
 
-        /* Eğitim İkonları - Düzgün Yuvarlak */
         .education-icon {
             width: 80px;
             height: 80px;
@@ -998,47 +844,6 @@
             color: var(--background);
             font-size: 1.8rem;
             flex-shrink: 0;
-        }
-
-        /* Eğitim İkon Renkleri */
-        .education-icon-1 {
-            background: linear-gradient(135deg, #333333, #666666);
-        }
-
-        .education-icon-2 {
-            background: linear-gradient(135deg, #000000, #333333);
-        }
-
-        .education-icon-3 {
-            background: linear-gradient(135deg, #666666, #333333);
-        }
-
-        .education-icon-4 {
-            background: linear-gradient(135deg, #333333, #000000);
-        }
-
-        .education-icon-5 {
-            background: linear-gradient(135deg, #000000, #666666);
-        }
-
-        .education-icon-6 {
-            background: linear-gradient(135deg, #666666, #000000);
-        }
-
-        .education-icon-7 {
-            background: linear-gradient(135deg, #333333, #666666);
-        }
-
-        .education-icon-8 {
-            background: linear-gradient(135deg, #000000, #333333);
-        }
-
-        .education-icon-9 {
-            background: linear-gradient(135deg, #666666, #333333);
-        }
-
-        .education-icon-10 {
-            background: linear-gradient(135deg, #333333, #000000);
         }
 
         .education-content h3 {
@@ -1093,6 +898,85 @@
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 1rem;
+        }
+
+        /* LIVO Section */
+        .livo-section {
+            padding: 5rem 0;
+            background: var(--secondary);
+        }
+
+        .livo-grid {
+            display: grid;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .livo-card {
+            background: var(--card-bg);
+            border: 3px solid var(--primary-light);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .livo-card:hover {
+            transform: translateY(-10px);
+            background: var(--primary);
+            color: var(--background);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .livo-card:hover .custom-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .livo-letter {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+
+        .livo-card:hover .livo-letter {
+            color: var(--background);
+        }
+
+        .livo-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+
+        .livo-card:hover .livo-title {
+            color: var(--background);
+        }
+
+        .livo-quote {
+            font-size: 1.125rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            transition: all 0.3s;
+        }
+
+        .livo-card:hover .livo-quote {
+            color: var(--secondary);
+        }
+
+        .livo-description {
+            color: var(--foreground);
+            transition: all 0.3s;
+        }
+
+        .livo-card:hover .livo-description {
+            color: var(--background);
         }
 
         /* Testimonials */
@@ -1225,6 +1109,15 @@
             transform: translateX(10px);
         }
 
+        .contact-info li:hover a,
+        .contact-info li:hover div {
+            color: var(--primary) !important;
+        }
+
+        .contact-info li:hover div[style*="opacity: 0.8"] {
+            opacity: 1 !important;
+        }
+
         .contact-form {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
@@ -1267,11 +1160,7 @@
             background: var(--background);
             color: var(--primary);
         }
-        
-        .btn {
-            
-            border: px solid black;
-        }
+
         /* Footer */
         .footer {
             background: var(--primary);
@@ -1280,12 +1169,12 @@
         }
 
         .footer-content {
-    display: grid;
-    gap: 2rem;
-    margin-bottom: 2rem;
-    border-top: 1px solid var(--primary-light);
-    padding-top: 2rem;
-}
+            display: grid;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            border-top: 1px solid var(--primary-light);
+            padding-top: 2rem;
+        }
 
         .footer-brand {
             font-size: 1.5rem;
@@ -1341,8 +1230,8 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.75rem 1.5rem;
-            background: var(--primary-light);
-            color: var(--background);
+            background: white;
+            color: black;
             border-radius: 0.75rem;
             text-decoration: none;
             transition: all 0.3s;
@@ -1368,9 +1257,9 @@
             width: 4rem;
             height: 4rem;
             border-radius: 50%;
-            background: var(--primary-light);
+            background: white;
             border: none;
-            color: var(--background);
+            color: black;
             font-size: 1.5rem;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -1381,7 +1270,8 @@
         .instagram-float-btn:hover {
             transform: scale(1.1) rotate(10deg);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            background: var(--primary);
+            background: black;
+            color: white;
         }
 
         .instagram-popup {
@@ -1403,54 +1293,8 @@
         }
 
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .instagram-popup h3 {
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        .instagram-popup p {
-            color: var(--foreground);
-            margin-bottom: 1.5rem;
-            font-size: 0.875rem;
-        }
-
-        .instagram-popup .instagram-btn {
-            width: 100%;
-            justify-content: center;
-        }
-
-        .close-popup {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--foreground);
-            transition: all 0.3s;
-            width: 2rem;
-            height: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-        }
-
-        .close-popup:hover {
-            background: var(--primary);
-            color: var(--background);
-            transform: rotate(90deg);
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Payment Modal */
@@ -1539,75 +1383,10 @@
             background: var(--primary);
             color: var(--background);
         }
+        .btn btn-primary quiz-next{
+            border: 2px solid black !important;
 
-        .payment-option h4 {
-            margin-bottom: 0.5rem;
         }
-
-        .payment-option p {
-            font-size: 0.875rem;
-            opacity: 0.8;
-        }
-
-        /* Quiz geri tuşu için özel class */
-        .quiz-back-btn {
-            color: var(--primary);
-            background: var(--background);
-            border: 2px solid var(--primary);
-        }
-
-        .quiz-back-btn:hover {
-            background: var(--primary);
-            color: var(--background);
-        }
-
-        /* Quiz "Size Uygun Paketi Bulun" butonu için özel class */
-        .quiz-find-package-btn {
-            color: var(--background);
-            background: transparent;
-            border: 2px solid var(--background);
-        }
-
-        .quiz-find-package-btn:hover {
-            background: var(--background);
-            color: var(--primary);
-        }
-
-        /* Email hover düzeltmesi */
-        .contact-info li a {
-            color: var(--background);
-            text-decoration: none;
-        }
-
-        .contact-info li:hover a {
-            color: var(--primary);
-        }
-
-        /* Hero section düzeni */
-        .hero-content-wrapper {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 3rem;
-        }
-
-        .contact-info li:hover a {
-    color: var(--primary) !important;
-}
-
-.contact-info li:hover div {
-    color: var(--primary) !important;
-}
-
-.contact-info li:hover div[style*="opacity: 0.8"] {
-    opacity: 1 !important;
-}
-
-        @media (min-width: 1024px) {
-            .hero-content-wrapper {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
         /* Responsive */
         @media (min-width: 640px) {
             .hero-buttons {
@@ -1651,10 +1430,14 @@
             .footer-content {
                 grid-template-columns: repeat(3, 1fr);
             }
+
+            .about-grid {
+                grid-template-columns: 1fr 1fr;
+            }
         }
 
         @media (min-width: 1024px) {
-            .hero-content {
+            .hero-content-wrapper {
                 grid-template-columns: 1fr 1fr;
             }
 
@@ -1693,9 +1476,9 @@
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-content">
-            <!-- Logo ile değiştirilmiş nav-brand -->
             <div class="nav-brand" onclick="scrollToSection('#home')">
-                <img src="livolab-logo.png" alt="LivoLab Logo" style="height: 40px; width: auto;">
+                <img src="livolab-logo.png" alt="LivoLab Logo" class="nav-logo-default">
+                <img src="livolab-black.png" alt="LivoLab Logo" class="nav-logo-scrolled">
             </div>
             <div class="nav-links">
                 <a href="#home" onclick="scrollToSection('#home')">Ana Sayfa</a>
@@ -1916,9 +1699,9 @@
                     
                     <ul class="package-features">
                         <li><span class="check-icon">✓</span> Tüm seviyeler için uygun</li>
-                        <li><span class="check-icon">✓</span> Eğitmenle  her seviye için uygun canlı online grup ders.👯‍♀️</li>
-                        <li><span class="check-icon">✓</span> Haftada 2 gün mat pilates, 1 gün total body hitt(cardio) haftalık 3, ayda 12 ders.⚡️</li>
-                        <li><span class="check-icon">✓</span> WhatsApp grup içerisinde haftaiçi belirli saatlerde eğitmene ulaşım.📱</li>
+                        <li><span class="check-icon">✓</span> Eğitmenle her seviye için uygun canlı online grup ders.</li>
+                        <li><span class="check-icon">✓</span> Haftada 2 gün mat pilates, 1 gün total body hitt(cardio) haftalık 3, ayda 12 ders.</li>
+                        <li><span class="check-icon">✓</span> WhatsApp grup içerisinde haftaiçi belirli saatlerde eğitmene ulaşım.</li>
                         <li><span class="check-icon">✓</span> Herhangi bir omurga sağlığı problemin varsa, diğer planlar senin için daha doğru bir seçenek.</li>
                     </ul>
                     <p class="package-description">Gold üyelik planı minimum 5 kişilik grup yapısıyla başlatılır.Dersler 45 dakikadır.
@@ -1954,11 +1737,7 @@
                                 <div class="price">6.510₺</div>
                             </div>
                         </div>
-                        
-                        
                     </div>
-
-                  
                 </div>
 
                 <!-- DIAMOND Package -->
@@ -1973,9 +1752,9 @@
                     
                     <ul class="package-features">
                         <li><span class="check-icon">✓</span> Eğitmeniniz ile bire bir canlı online dersler.</li>
-                        <li><span class="check-icon">✓</span> Kişinin seviyesi ve ihtiyaçlarına yönelik planlanan ders repertuvarı.🤸🏻‍♀️</li>
-                        <li><span class="check-icon">✓</span> Haftaiçi günün belirli saatlerinde eğitmene ulaşım✅</li>
-                        <li><span class="check-icon">✓</span> Ders planın dışında uygulayabileceğin hediye bir stretching ders kaydı.🏹</li>
+                        <li><span class="check-icon">✓</span> Kişinin seviyesi ve ihtiyaçlarına yönelik planlanan ders repertuvarı.</li>
+                        <li><span class="check-icon">✓</span> Haftaiçi günün belirli saatlerinde eğitmene ulaşım.</li>
+                        <li><span class="check-icon">✓</span> Ders planın dışında uygulayabileceğin hediye bir stretching ders kaydı.</li>
                         <li><span class="check-icon">✓</span> Herhangi bir omurga sağlığı problemin varsa, bu plan senin için doğru bir seçenek olabilir.</li>
                     </ul>
                     
@@ -1994,8 +1773,6 @@
                             </div>
                         </div>
                     </div>
-
-                   
                 </div>
 
                 <!-- VIP Package -->
@@ -2008,14 +1785,13 @@
                     <h3 class="package-title">VIP Paket</h3>
                     <ul class="package-features">
                         <li><span class="check-icon">✓</span> Eğitmen şehrinde</li>
-                        <li><span class="check-icon">✓</span> Eğitmeniniz ile bire bir canlı online dersler.👩🏻‍💻</li>
-                        <li><span class="check-icon">✓</span> Kişinin seviyesi ve ihtiyaçlarına yönelik planlanan ders repertuvarı.🤸🏻‍♀️</li>
-                        <li><span class="check-icon">✓</span> Haftada bir ders eğitmenin ile dış mekanda cardio antrenmanı ya da pilates.🏃‍♀️</li>
-                        <li><span class="check-icon">✓</span> Her ay sonu durum değerlendirmesi.📈</li>
-                        <li><span class="check-icon">✓</span> Haftaiçi günün belirli saatlerinde eğitmene ulaşım✅</li>
-                        <li><span class="check-icon">✓</span> Ders planın dışında uygulayabileceğin hediye bir stretching ders kaydı.🏹</li>
+                        <li><span class="check-icon">✓</span> Eğitmeniniz ile bire bir canlı online dersler.</li>
+                        <li><span class="check-icon">✓</span> Kişinin seviyesi ve ihtiyaçlarına yönelik planlanan ders repertuvarı.</li>
+                        <li><span class="check-icon">✓</span> Haftada bir ders eğitmenin ile dış mekanda cardio antrenmanı ya da pilates.</li>
+                        <li><span class="check-icon">✓</span> Her ay sonu durum değerlendirmesi.</li>
+                        <li><span class="check-icon">✓</span> Haftaiçi günün belirli saatlerinde eğitmene ulaşım.</li>
+                        <li><span class="check-icon">✓</span> Ders planın dışında uygulayabileceğin hediye bir stretching ders kaydı.</li>
                         <li><span class="check-icon">✓</span> Herhangi bir omurga sağlığı problemin varsa, bu plan senin için doğru bir seçenek olabilir.</li>
-                
                     </ul>
                     <p class="package-description">Dersler 45 dakikadır.</p>
                     <div>
@@ -2032,14 +1808,8 @@
                             </div>
                         </div>
                     </div>
-
-                   
                 </div>
             </div>
-
-            <p style="text-align: center; margin-top: 2rem; color: var(--foreground); font-size: 0.875rem;">
-               
-            </p>
         </div>
     </section>
 
@@ -2255,7 +2025,7 @@
 
             <div class="pilates-cards">
                 <div class="pilates-card">
-                    <div class="custom-icon info-icon-1 info-icon">
+                    <div class="custom-icon info-icon-1 info-icon" style="margin: 0 auto 1rem;">
                         <i class="fas fa-question-circle"></i>
                     </div>
                     <h3>Pilates Nedir?</h3>
@@ -2263,7 +2033,7 @@
                 </div>
 
                 <div class="pilates-card">
-                    <div class="custom-icon info-icon-2 info-icon">
+                    <div class="custom-icon info-icon-2 info-icon" style="margin: 0 auto 1rem;">
                         <i class="fas fa-heart"></i>
                     </div>
                     <h3>Omurga Sağlığı</h3>
@@ -2271,7 +2041,7 @@
                 </div>
 
                 <div class="pilates-card">
-                    <div class="custom-icon info-icon-3 info-icon">
+                    <div class="custom-icon info-icon-3 info-icon" style="margin: 0 auto 1rem;">
                         <i class="fas fa-users"></i>
                     </div>
                     <h3>Kimler Yapabilir?</h3>
@@ -2441,54 +2211,57 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div>
-                    <div class="footer-brand">LivoLab</div>
-                    <p class="footer-description">
-                        Profesyonel online Pilates eğitimi ile bedeninizi ve zihninizi dönüştürün.
-                    </p>
-                    <a href="https://www.instagram.com/livolab_/" target="_blank" class="instagram-btn">
-                        <i class="fab fa-instagram"></i>
-                        @livolab_
-                    </a>
+   <!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div>
+                <!-- Logo ile değiştirilmiş footer brand -->
+                <div class="footer-brand">
+                    <img src="livolab-logo.png" alt="LivoLab Logo" style="height: 60px; width: auto;">
                 </div>
-
-                <div class="footer-section">
-                    <h4>Hızlı Bağlantılar</h4>
-                    <ul>
-                        <li><a href="#packages" onclick="scrollToSection('#packages')">Paketler</a></li>
-                        <li><a href="#about" onclick="scrollToSection('#about')">Hakkımda</a></li>
-                        <li><a href="#education" onclick="scrollToSection('#education')">Eğitimler</a></li>
-                        <li><a href="#pilates" onclick="scrollToSection('#pilates')">Pilates</a></li>
-                        <li><a href="#livo" onclick="scrollToSection('#livo')">LIVO</a></li>
-                        <li><a href="#contact" onclick="scrollToSection('#contact')">İletişim</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h4>Hizmetlerimiz</h4>
-                    <ul>
-                        <li><a href="#">Online Grup Dersler</a></li>
-                        <li><a href="#">Birebir Özel Dersler</a></li>
-                        
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h4>İletişim</h4>
-                    <ul>
-                        <li><a href="mailto:livolab25@gmail.com">livolab25@gmail.com</a></li>
-                    </ul>
-                </div>
+                <p class="footer-description">
+                    Profesyonel online Pilates eğitimi ile bedeninizi ve zihninizi dönüştürün.
+                </p>
+                <a href="https://www.instagram.com/livolab_/" target="_blank" class="instagram-btn">
+                    <i class="fab fa-instagram"></i>
+                    @livolab_
+                </a>
             </div>
 
-            <div class="footer-bottom">
-                <p>© 2025 LivoLab. Tüm hakları saklıdır. <a href="https://www.instagram.com/bigsparkmedia/" target="_blank" style="color: var(--accent);">Big Spark Media</a> tarafından geliştirilmiştir.</p>
+            <div class="footer-section">
+                <h4>Hızlı Bağlantılar</h4>
+                <ul>
+                    <li><a href="#packages" onclick="scrollToSection('#packages')">Paketler</a></li>
+                    <li><a href="#about" onclick="scrollToSection('#about')">Hakkımda</a></li>
+                    <li><a href="#education" onclick="scrollToSection('#education')">Eğitimler</a></li>
+                    <li><a href="#pilates" onclick="scrollToSection('#pilates')">Pilates</a></li>
+                    <li><a href="#livo" onclick="scrollToSection('#livo')">LIVO</a></li>
+                    <li><a href="#contact" onclick="scrollToSection('#contact')">İletişim</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Hizmetlerimiz</h4>
+                <ul>
+                    <li><a href="#">Online Grup Dersler</a></li>
+                    <li><a href="#">Birebir Özel Dersler</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>İletişim</h4>
+                <ul>
+                    <li><a href="mailto:livolab25@gmail.com">livolab25@gmail.com</a></li>
+                </ul>
             </div>
         </div>
-    </footer>
+
+        <div class="footer-bottom">
+            <p>© 2025 LivoLab. Tüm hakları saklıdır. <a href="https://www.instagram.com/bigsparkmedia/" target="_blank" style="color: var(--accent);">Big Spark Media</a> tarafından geliştirilmiştir.</p>
+        </div>
+    </div>
+</footer>
 
     <!-- Instagram Float Button -->
     <div class="instagram-float">
@@ -2670,7 +2443,6 @@
                 selectedPackage = this.dataset.package;
                 selectedPrice = this.dataset.price;
                 
-                // Show payment modal
                 showPaymentModal(selectedPackage, selectedPrice);
             });
         });
@@ -2752,7 +2524,7 @@
                 if (cardTop < triggerBottom) {
                     setTimeout(() => {
                         card.classList.add('animate');
-                    }, index * 100); // Her kart için 100ms gecikme
+                    }, index * 100);
                 }
             });
         }
