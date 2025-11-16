@@ -204,7 +204,7 @@
         /* Hero Section */
         .hero {
             padding: 8rem 0 5rem;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(51, 51, 51, 0.5)), url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1200&h=800&fit=crop') no-repeat center center;
+            background: linear-gradient(rgba(0, 0, 0, 1.7), rgba(51, 51, 51, 0.5)), url('livolab-bursa.jpg') no-repeat center center;
             background-size: cover;
             position: relative;
             overflow: hidden;
@@ -261,13 +261,13 @@
         }
 
         .hero-stats {
-    display: flex;
-    gap: 2rem;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    flex-wrap: wrap;
-}
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            flex-wrap: wrap;
+        }
 
         .stat {
             text-align: center;
@@ -358,8 +358,6 @@
             color: var(--primary);
         }
 
-        
-
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -397,7 +395,7 @@
         }
 
         .education-icon {
-            font-size: 2rem;
+            font-size: 1.5rem;
         }
 
         .info-icon {
@@ -453,7 +451,14 @@
             background: linear-gradient(135deg, #666666, #000000);
             color: var(--background);
         }
-
+        .education-icon-7 {
+            background: linear-gradient(135deg, #666666, #000000);
+            color: var(--background);
+        }
+        .education-icon-8 {
+            background: linear-gradient(135deg, #666666, #000000);
+            color: var(--background);
+        }
         /* Info Icons */
         .info-icon-1 {
             background: linear-gradient(135deg, #333333, #000000);
@@ -768,7 +773,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem;
-            border: 2px solid #E5E7EB;
+            border: 1px solid #585858;
             border-radius: 0.75rem;
             margin-bottom: 0.75rem;
             cursor: pointer;
@@ -952,6 +957,22 @@
             gap: 1rem;
             transition: all 0.3s;
             cursor: pointer;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .education-card.animate {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease-out;
+        }
+
+        .education-card:nth-child(odd).animate {
+            transform: translateX(0);
+        }
+
+        .education-card:nth-child(even).animate {
+            transform: translateX(0);
         }
 
         .education-card:hover {
@@ -961,8 +982,63 @@
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         }
 
-        .education-card:hover .custom-icon {
+        .education-card:hover .education-icon {
             transform: scale(1.2) rotate(360deg);
+        }
+
+        /* Eğitim İkonları - Düzgün Yuvarlak */
+        .education-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            color: var(--background);
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+
+        /* Eğitim İkon Renkleri */
+        .education-icon-1 {
+            background: linear-gradient(135deg, #333333, #666666);
+        }
+
+        .education-icon-2 {
+            background: linear-gradient(135deg, #000000, #333333);
+        }
+
+        .education-icon-3 {
+            background: linear-gradient(135deg, #666666, #333333);
+        }
+
+        .education-icon-4 {
+            background: linear-gradient(135deg, #333333, #000000);
+        }
+
+        .education-icon-5 {
+            background: linear-gradient(135deg, #000000, #666666);
+        }
+
+        .education-icon-6 {
+            background: linear-gradient(135deg, #666666, #000000);
+        }
+
+        .education-icon-7 {
+            background: linear-gradient(135deg, #333333, #666666);
+        }
+
+        .education-icon-8 {
+            background: linear-gradient(135deg, #000000, #333333);
+        }
+
+        .education-icon-9 {
+            background: linear-gradient(135deg, #666666, #333333);
+        }
+
+        .education-icon-10 {
+            background: linear-gradient(135deg, #333333, #000000);
         }
 
         .education-content h3 {
@@ -1204,10 +1280,12 @@
         }
 
         .footer-content {
-            display: grid;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
+    display: grid;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    border-top: 1px solid var(--primary-light);
+    padding-top: 2rem;
+}
 
         .footer-brand {
             font-size: 1.5rem;
@@ -1657,7 +1735,7 @@
                 <div>
                     <div class="hero-stats">
                         <div class="stat">
-                            <div class="stat-number">500+</div>
+                            <div class="stat-number">200+</div>
                             <div class="stat-label">Mutlu Öğrenci</div>
                         </div>
                         <div class="stat">
@@ -1832,14 +1910,16 @@
                         </div>
                     </div>
                     <h3 class="package-title">GOLD Paket</h3>
-                    <p class="package-description">"Tüm seviyeler için uygun" - Eğitmenle her seviye için uygun canlı online grup ders.</p>
+                    
                     <ul class="package-features">
-                        <li><span class="check-icon">✓</span> Canlı online grup dersleri</li>
-                        <li><span class="check-icon">✓</span> Haftada 2 mat pilates + 1 cardio</li>
-                        <li><span class="check-icon">✓</span> WhatsApp grubunda destek</li>
-                        <li><span class="check-icon">✓</span> Minimum 5 kişilik grup</li>
-                        <li><span class="check-icon">✓</span> 45 dakikalık dersler</li>
+                        <li><span class="check-icon">✓</span> Tüm seviyeler için uygun</li>
+                        <li><span class="check-icon">✓</span> Eğitmenle  her seviye için uygun canlı online grup ders.👯‍♀️</li>
+                        <li><span class="check-icon">✓</span> Haftada 2 gün mat pilates, 1 gün total body hitt(cardio) haftalık 3, ayda 12 ders.⚡️</li>
+                        <li><span class="check-icon">✓</span> WhatsApp grup içerisinde haftaiçi belirli saatlerde eğitmene ulaşım.📱</li>
+                        <li><span class="check-icon">✓</span> Herhangi bir omurga sağlığı problemin varsa, diğer planlar senin için daha doğru bir seçenek.</li>
                     </ul>
+                    <p class="package-description">Gold üyelik planı minimum 5 kişilik grup yapısıyla başlatılır.Dersler 45 dakikadır.
+                        "Online grup dersleri kadınlar özelindedir."</p>
                     <div>
                         <div class="package-price-option" data-package="gold" data-price="240">
                             <div>
@@ -1887,14 +1967,16 @@
                         </div>
                     </div>
                     <h3 class="package-title">DIAMOND Paket</h3>
-                    <p class="package-description">Bire bir özel derslerle kişiselleştirilmiş program. Omurga sağlığı için ideal.</p>
+                    
                     <ul class="package-features">
-                        <li><span class="check-icon">✓</span> Bire bir canlı online dersler</li>
-                        <li><span class="check-icon">✓</span> Kişiye özel program</li>
-                        <li><span class="check-icon">✓</span> Hediye stretching dersi</li>
-                        <li><span class="check-icon">✓</span> WhatsApp'ta iletişim</li>
-                        <li><span class="check-icon">✓</span> Omurga sağlığına özel</li>
+                        <li><span class="check-icon">✓</span> Eğitmeniniz ile bire bir canlı online dersler.</li>
+                        <li><span class="check-icon">✓</span> Kişinin seviyesi ve ihtiyaçlarına yönelik planlanan ders repertuvarı.🤸🏻‍♀️</li>
+                        <li><span class="check-icon">✓</span> Haftaiçi günün belirli saatlerinde eğitmene ulaşım✅</li>
+                        <li><span class="check-icon">✓</span> Ders planın dışında uygulayabileceğin hediye bir stretching ders kaydı.🏹</li>
+                        <li><span class="check-icon">✓</span> Herhangi bir omurga sağlığı problemin varsa, bu plan senin için doğru bir seçenek olabilir.</li>
                     </ul>
+                    
+                    <p class="package-description">Dersler 45 dakikadır.</p>
                     <div>
                         <div class="package-price-option" data-package="diamond" data-price="10080">
                             <div>
@@ -1921,14 +2003,18 @@
                         </div>
                     </div>
                     <h3 class="package-title">VIP Paket</h3>
-                    <p class="package-description">"Eğitmen şehrinde" - En kapsamlı deneyim. Özel dersler, açık hava antrenmanları ve düzenli değerlendirmeler.</p>
                     <ul class="package-features">
-                        <li><span class="check-icon">✓</span> Bire bir canlı dersler</li>
-                        <li><span class="check-icon">✓</span> Açık havada cardio/pilates</li>
-                        <li><span class="check-icon">✓</span> Aylık durum değerlendirmesi</li>
-                        <li><span class="check-icon">✓</span> Hediye stretching dersi</li>
-                        <li><span class="check-icon">✓</span> 7/24 WhatsApp desteği</li>
+                        <li><span class="check-icon">✓</span> Eğitmen şehrinde</li>
+                        <li><span class="check-icon">✓</span> Eğitmeniniz ile bire bir canlı online dersler.👩🏻‍💻</li>
+                        <li><span class="check-icon">✓</span> Kişinin seviyesi ve ihtiyaçlarına yönelik planlanan ders repertuvarı.🤸🏻‍♀️</li>
+                        <li><span class="check-icon">✓</span> Haftada bir ders eğitmenin ile dış mekanda cardio antrenmanı ya da pilates.🏃‍♀️</li>
+                        <li><span class="check-icon">✓</span> Her ay sonu durum değerlendirmesi.📈</li>
+                        <li><span class="check-icon">✓</span> Haftaiçi günün belirli saatlerinde eğitmene ulaşım✅</li>
+                        <li><span class="check-icon">✓</span> Ders planın dışında uygulayabileceğin hediye bir stretching ders kaydı.🏹</li>
+                        <li><span class="check-icon">✓</span> Herhangi bir omurga sağlığı problemin varsa, bu plan senin için doğru bir seçenek olabilir.</li>
+                
                     </ul>
+                    <p class="package-description">Dersler 45 dakikadır.</p>
                     <div>
                         <div class="package-price-option" data-package="vip" data-price="11970">
                             <div>
@@ -1949,7 +2035,7 @@
             </div>
 
             <p style="text-align: center; margin-top: 2rem; color: var(--foreground); font-size: 0.875rem;">
-                *Tüm dersler kadınlar özelindedir.
+               
             </p>
         </div>
     </section>
@@ -1986,14 +2072,14 @@
         <div class="container">
             <div class="about-content">
                 <div class="about-image-wrapper">
-                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=500&fit=crop" alt="Hacer Zorlu" class="about-image">
+                    <img src="livolab-pilates.jpg" alt="Hacer Zorlu" class="about-image">
                     <div class="about-floating-badge">
                         <div style="display: flex; align-items: center; gap: 1rem;">
                             <div class="custom-icon info-icon-1 info-icon">
                                 <i class="fas fa-trophy"></i>
                             </div>
                             <div>
-                                <div style="font-size: 1.5rem; font-weight: 600;">6+</div>
+                                <div style="font-size: 1.5rem; font-weight: 600;">10</div>
                                 <div style="font-size: 0.875rem; opacity: 0.8;">Sertifika</div>
                             </div>
                         </div>
@@ -2001,7 +2087,7 @@
                 </div>
 
                 <div>
-                    <span class="badge">EĞİTMENİNİZİ TANYIN</span>
+                    <span class="badge">EĞİTMENİNİZİ TANIYIN</span>
                     <h2 class="section-title">Hacer ZORLU</h2>
                     <p style="color: var(--foreground); margin-bottom: 1rem;">
                         2 Aralık 1997 Edremit doğumluyum. 2021 yılında Işık Üniversitesi Tekstil ve Moda Tasarımı bölümünden mezun oldum. Aynı yıl Pilates ile tanıştım; bu süreçte fitness ile de ilgilenmeye başladım ve hala her iki disiplini aktif olarak sürdürüyorum.
@@ -2028,9 +2114,10 @@
                             </div>
                             <h4>Uzmanlık Alanları</h4>
                             <ul>
-                                <li>• Core Güçlendirme</li>
-                                <li>• Omurga Sağlığı</li>
-                                <li>• Esneklik Eğitimi</li>
+                                <li>• Mat pilates</li>
+                                <li>• Bel boyun problemleri</li>
+                                <li>• Skolyoz</li>
+                                <li>• Fonksiyonel egzersiz</li>
                             </ul>
                         </div>
                     </div>
@@ -2051,7 +2138,7 @@
 
             <div class="education-grid">
                 <div class="education-card">
-                    <div class="custom-icon education-icon-1 education-icon">
+                    <div class="education-icon education-icon-1">
                         <i class="fas fa-graduation-cap"></i>
                     </div>
                     <div class="education-content">
@@ -2061,7 +2148,7 @@
                 </div>
 
                 <div class="education-card">
-                    <div class="custom-icon education-icon-2 education-icon">
+                    <div class="education-icon education-icon-2">
                         <i class="fas fa-book-open"></i>
                     </div>
                     <div class="education-content">
@@ -2071,7 +2158,7 @@
                 </div>
 
                 <div class="education-card">
-                    <div class="custom-icon education-icon-3 education-icon">
+                    <div class="education-icon education-icon-3">
                         <i class="fas fa-certificate"></i>
                     </div>
                     <div class="education-content">
@@ -2081,7 +2168,7 @@
                 </div>
 
                 <div class="education-card">
-                    <div class="custom-icon education-icon-4 education-icon">
+                    <div class="education-icon education-icon-4">
                         <i class="fas fa-user-check"></i>
                     </div>
                     <div class="education-content">
@@ -2091,7 +2178,7 @@
                 </div>
 
                 <div class="education-card">
-                    <div class="custom-icon education-icon-5 education-icon">
+                    <div class="education-icon education-icon-5">
                         <i class="fas fa-dumbbell"></i>
                     </div>
                     <div class="education-content">
@@ -2101,12 +2188,52 @@
                 </div>
 
                 <div class="education-card">
-                    <div class="custom-icon education-icon-6 education-icon">
+                    <div class="education-icon education-icon-6">
                         <i class="fas fa-globe-americas"></i>
                     </div>
                     <div class="education-content">
                         <h3>Australia Sports Institute Level 1 Pilates Trainer</h3>
                         <p>Uluslararası geçerliliği olan bu kapsamlı eğitimi başarıyla tamamladım.</p>
+                    </div>
+                </div>
+
+                <div class="education-card">
+                    <div class="education-icon education-icon-7">
+                        <i class="fas fa-feather-alt"></i>
+                    </div>
+                    <div class="education-content">
+                        <h3>Australia Sports Institute & Fitness Academy "Yoga Fly"</h3>
+                        <p>Hamak destekli hava yogası tekniklerini öğreten Yoga Fly eğitimini başarıyla tamamladım.</p>
+                    </div>
+                </div>
+               
+                <div class="education-card">
+                    <div class="education-icon education-icon-8">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <div class="education-content">
+                        <h3>VOB Pilates Academy "Kifotik Postür ve Egzersiz Stratejileri"</h3>
+                        <p>Kifotik postürü düzeltmeye yönelik analiz ve egzersiz stratejilerini kapsayan bu profesyonel pilates eğitimini başarıyla tamamladım.</p>
+                    </div>
+                </div>
+
+                <div class="education-card">
+                    <div class="education-icon education-icon-9">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                    <div class="education-content">
+                        <h3>Bilginet Academy "Fit Nefes Koçluğu"</h3>
+                        <p>Doğru nefes teknikleriyle fiziksel ve zihinsel performansı artırmayı öğreten Fit Nefes Koçluğu eğitimini başarıyla tamamladım.</p>
+                    </div>
+                </div>
+
+                <div class="education-card">
+                    <div class="education-icon education-icon-10">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="education-content">
+                        <h3>Baps Academy Special Condition Workshop</h3>
+                        <p>Özel sağlık durumlarına sahip bireyler için güvenli ve etkili egzersiz yöntemlerini içeren bu workshopu başarıyla tamamladım.</p>
                     </div>
                 </div>
             </div>
@@ -2155,7 +2282,7 @@
     <section id="livo" class="livo-section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">LIVO'nun Anlamı</h2>
+                <h2 class="section-title">LIVO</h2>
                 <p class="section-description">
                     Yaşam, canlılık ve birlik - LIVO felsefesiyle tanışın
                 </p>
@@ -2209,9 +2336,8 @@
                         "Hacer'in online dersleri duruşumu ve gücümü değiştirdi. GOLD paket Pilates yolculuğuma başlamak için mükemmeldi!"
                     </p>
                     <div class="testimonial-author">
-                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b5bb?w=80&h=80&fit=crop&crop=face" alt="Ayşe Yılmaz" class="testimonial-avatar">
                         <div class="testimonial-info">
-                            <h4>Ayşe Yılmaz</h4>
+                            <h4>SERMİNAZ YILMAZ</h4>
                             <p>Doğrulanmış Öğrenci</p>
                         </div>
                     </div>
@@ -2223,15 +2349,14 @@
                         <span class="star">★</span>
                         <span class="star">★</span>
                         <span class="star">★</span>
-                        <span class="star">★</span>
+                        <span class="star" style="color: #E5E7EB;">★</span>
                     </div>
                     <p class="testimonial-text">
                         "DIAMOND paket inanılmaz. Hiç bu kadar güçlü ve dengeli hissetmemiştim. Kesinlikle tavsiye ediyorum!"
                     </p>
                     <div class="testimonial-author">
-                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face" alt="Zeynep Kaya" class="testimonial-avatar">
                         <div class="testimonial-info">
-                            <h4>Zeynep Kaya</h4>
+                            <h4>GÜLŞAH ELİBOL</h4>
                             <p>Doğrulanmış Öğrenci</p>
                         </div>
                     </div>
@@ -2249,9 +2374,27 @@
                         "Profesyonel eğitim ve net açıklamalar. Ömür boyu erişim mükemmel bir değer sunuyor!"
                     </p>
                     <div class="testimonial-author">
-                        <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=80&h=80&fit=crop&crop=face" alt="Elif Demir" class="testimonial-avatar">
                         <div class="testimonial-info">
-                            <h4>Elif Demir</h4>
+                            <h4>BÜŞRA ALTIN</h4>
+                            <p>Doğrulanmış Öğrenci</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <p class="testimonial-text">
+                        "Hacer'in yaklaşımı ve bilgisi beni çok etkiledi. VIP paket ile hem online hem açık havada ders almak harika bir deneyim!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-info">
+                            <h4>BAHAR TÜRK</h4>
                             <p>Doğrulanmış Öğrenci</p>
                         </div>
                     </div>
@@ -2324,10 +2467,9 @@
                 <div class="footer-section">
                     <h4>Hizmetlerimiz</h4>
                     <ul>
-                        <li><a href="#">Online Grup Dersleri</a></li>
+                        <li><a href="#">Online Grup Dersler</a></li>
                         <li><a href="#">Birebir Özel Dersler</a></li>
-                        <li><a href="#">Omurga Sağlığı Programları</a></li>
-                        <li><a href="#">Esneklik Eğitimleri</a></li>
+                        
                     </ul>
                 </div>
 
@@ -2595,6 +2737,26 @@
             const popup = document.getElementById('instagramPopup');
             popup.classList.toggle('active');
         }
+
+        // Eğitim kartları için animasyon
+        function animateEducationCards() {
+            const educationCards = document.querySelectorAll('.education-card');
+            const triggerBottom = window.innerHeight * 0.85;
+
+            educationCards.forEach((card, index) => {
+                const cardTop = card.getBoundingClientRect().top;
+
+                if (cardTop < triggerBottom) {
+                    setTimeout(() => {
+                        card.classList.add('animate');
+                    }, index * 100); // Her kart için 100ms gecikme
+                }
+            });
+        }
+
+        // Sayfa yüklendiğinde ve kaydırıldığında animasyonu tetikle
+        window.addEventListener('load', animateEducationCards);
+        window.addEventListener('scroll', animateEducationCards);
     </script>
 </body>
-</html> 
+</html>
