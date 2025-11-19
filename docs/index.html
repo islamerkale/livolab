@@ -1814,31 +1814,55 @@
     </section>
 
     <!-- Payment Modal -->
-    <div class="payment-modal" id="paymentModal">
-        <div class="payment-content">
-            <div class="payment-header">
-                <h3>Ödeme Yap</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div style="text-align: center; margin-bottom: 2rem;">
-                <div style="font-size: 3rem; margin-bottom: 0.5rem;" id="modal-icon">🥇</div>
-                <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;" id="modal-package-name">GOLD Paket</h4>
-                <p style="color: var(--foreground); margin-bottom: 1rem;" id="modal-package-desc"></p>
-                <div style="font-size: 2.5rem; font-weight: 600;" id="modal-price">3.045₺</div>
-            </div>
-            <div class="payment-options">
-                <div class="payment-option selected" data-method="credit-card">
-                    <h4>Kredi Kartı</h4>
-                    <p>Güvenli ödeme ile anında başlayın</p>
-                </div>
-                <div class="payment-option" data-method="bank-transfer">
-                    <h4>Banka Havalesi</h4>
-                    <p>Havale ile ödeme yapın</p>
-                </div>
-            </div>
-            <button class="btn btn-primary" style="width: 100%;" id="proceedPayment">Ödemeye Devam Et</button>
+ 
+<div class="payment-modal" id="paymentModal">
+    <div class="payment-content">
+        <div class="payment-header">
+            <h3>Ödeme Yap</h3>
+            <button class="close-modal">&times;</button>
         </div>
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;" id="modal-icon">🥇</div>
+            <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;" id="modal-package-name">GOLD Paket</h4>
+            <p style="color: var(--foreground); margin-bottom: 1rem;" id="modal-package-desc"></p>
+            <div style="font-size: 2.5rem; font-weight: 600;" id="modal-price">3.045₺</div>
+        </div>
+        
+        <!-- Müşteri Bilgileri Formu -->
+        <div id="customerInfoForm">
+            <div style="margin-bottom: 1rem;">
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Ad Soyad *</label>
+                <input type="text" id="customerName" placeholder="Adınız Soyadınız" style="width: 100%; padding: 0.75rem; border: 2px solid #E5E7EB; border-radius: 0.5rem; font-size: 1rem;" required>
+            </div>
+            <div style="margin-bottom: 1rem;">
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Email *</label>
+                <input type="email" id="customerEmail" placeholder="email@example.com" style="width: 100%; padding: 0.75rem; border: 2px solid #E5E7EB; border-radius: 0.5rem; font-size: 1rem;" required>
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Telefon *</label>
+                <input type="tel" id="customerPhone" placeholder="05XX XXX XX XX" style="width: 100%; padding: 0.75rem; border: 2px solid #E5E7EB; border-radius: 0.5rem; font-size: 1rem;" required>
+            </div>
+        </div>
+
+        <div class="payment-options">
+            <div class="payment-option selected" data-method="credit-card">
+                <h4>Kredi Kartı</h4>
+                <p>Güvenli ödeme ile anında başlayın</p>
+            </div>
+        </div>
+        
+        <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" id="proceedPayment">
+            <span id="paymentButtonText">Ödemeye Devam Et</span>
+            <div id="paymentLoading" style="display: none;">
+                <div style="display: inline-block; width: 1rem; height: 1rem; border: 2px solid transparent; border-top: 2px solid currentColor; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                İşleniyor...
+            </div>
+        </button>
+        
+        <!-- PayTR Iframe Alanı -->
+        <div id="paytriframe" style="display: none; margin-top: 1rem;"></div>
     </div>
+</div>
 
     <!-- About Section -->
     <section id="about" class="about">
@@ -2524,6 +2548,196 @@
         // Sayfa yüklendiğinde ve kaydırıldığında animasyonu tetikle
         window.addEventListener('load', animateEducationCards);
         window.addEventListener('scroll', animateEducationCards);
+
+        // ==================== PAYTR ÖDEME SİSTEMİ ====================
+
+// Package selection and payment modal
+let selectedPackage = '';
+let selectedPrice = '';
+let selectedPackageName = '';
+let selectedPackageDesc = '';
+
+document.querySelectorAll('.package-price-option').forEach(option => {
+    option.addEventListener('click', function() {
+        const packageCard = this.closest('.package-card');
+        const packageOptions = packageCard.querySelectorAll('.package-price-option');
+        
+        packageOptions.forEach(opt => opt.classList.remove('selected'));
+        this.classList.add('selected');
+        
+        selectedPackage = this.dataset.package;
+        selectedPrice = this.dataset.price;
+        selectedPackageName = packageCard.querySelector('.package-title').textContent;
+        selectedPackageDesc = packageCard.querySelector('.package-description').textContent;
+        
+        showPaymentModal(selectedPackage, selectedPrice);
+    });
+});
+
+function showPaymentModal(packageName, price) {
+    const modal = document.getElementById('paymentModal');
+    const modalIcon = document.getElementById('modal-icon');
+    const modalPackageName = document.getElementById('modal-package-name');
+    const modalPackageDesc = document.getElementById('modal-package-desc');
+    const modalPrice = document.getElementById('modal-price');
+    
+    const packageIcons = {
+        'gold': '🥇',
+        'diamond': '💎',
+        'vip': '👑'
+    };
+    
+    modalIcon.textContent = packageIcons[packageName];
+    modalPackageName.textContent = selectedPackageName;
+    modalPackageDesc.textContent = selectedPackageDesc;
+    modalPrice.textContent = price + '₺';
+    
+    // Formu sıfırla
+    document.getElementById('customerName').value = '';
+    document.getElementById('customerEmail').value = '';
+    document.getElementById('customerPhone').value = '';
+    
+    // Iframe'i gizle, formu göster
+    document.getElementById('paytriframe').style.display = 'none';
+    document.getElementById('customerInfoForm').style.display = 'block';
+    
+    modal.classList.add('active');
+}
+
+// Ödeme butonu işlemi
+document.getElementById('proceedPayment').addEventListener('click', function() {
+    processPayment();
+});
+
+async function processPayment() {
+    const customerName = document.getElementById('customerName').value.trim();
+    const customerEmail = document.getElementById('customerEmail').value.trim();
+    const customerPhone = document.getElementById('customerPhone').value.trim();
+    
+    // Validasyon
+    if (!customerName || !customerEmail || !customerPhone) {
+        alert('Lütfen tüm bilgilerinizi eksiksiz doldurunuz.');
+        return;
+    }
+    
+    if (!isValidEmail(customerEmail)) {
+        alert('Lütfen geçerli bir email adresi giriniz.');
+        return;
+    }
+    
+    if (!isValidPhone(customerPhone)) {
+        alert('Lütfen geçerli bir telefon numarası giriniz.');
+        return;
+    }
+    
+    // Loading state
+    const paymentButton = document.getElementById('proceedPayment');
+    const buttonText = document.getElementById('paymentButtonText');
+    const loadingText = document.getElementById('paymentLoading');
+    
+    buttonText.style.display = 'none';
+    loadingText.style.display = 'block';
+    paymentButton.disabled = true;
+    
+    try {
+        // PayTR token al
+        const tokenResult = await getPayTRToken({
+            package: selectedPackage,
+            price: selectedPrice,
+            customer_name: customerName,
+            customer_email: customerEmail,
+            customer_phone: customerPhone
+        });
+        
+        if (tokenResult.success) {
+            // Iframe'i göster ve token ile başlat
+            document.getElementById('customerInfoForm').style.display = 'none';
+            document.getElementById('paytriframe').style.display = 'block';
+            
+            initializePayTRIframe(tokenResult.token);
+        } else {
+            alert('Ödeme işlemi başlatılamadı: ' + tokenResult.error);
+        }
+    } catch (error) {
+        alert('Bir hata oluştu: ' + error.message);
+    } finally {
+        // Loading state'i kaldır
+        buttonText.style.display = 'block';
+        loadingText.style.display = 'none';
+        paymentButton.disabled = false;
+    }
+}
+
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+function isValidPhone(phone) {
+    const phoneRegex = /^[0-9]{10,11}$/;
+    return phoneRegex.test(phone.replace(/\D/g, ''));
+}
+
+async function getPayTRToken(paymentData) {
+    const response = await fetch('process_payment.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(paymentData)
+    });
+    
+    return await response.json();
+}
+
+function initializePayTRIframe(token) {
+    // PayTR iframe'i başlat
+    if (typeof PayTRUI !== 'undefined') {
+        const paytr = new PayTRUI("iframe", "paytriframe");
+        paytr.setup({
+            type: "iframe",
+            element: "paytriframe",
+            token: token,
+            debug: true,
+            callback: function(response) {
+                console.log("Ödeme Sonucu:", response);
+                if (response.status === "success") {
+                    // Başarılı ödeme - Modal kapanacak, success.php'ye yönlendirilecek
+                    document.getElementById('paymentModal').classList.remove('active');
+                    // success.php'ye yönlendirme PayTR tarafından yapılacak
+                } else {
+                    // Başarısız ödeme
+                    alert('Ödeme işlemi başarısız: ' + response.error);
+                    document.getElementById('paymentModal').classList.remove('active');
+                }
+            }
+        });
+    } else {
+        console.error('PayTR UI kütüphanesi yüklenemedi');
+        alert('Ödeme sistemi yüklenirken bir hata oluştu. Lütfen sayfayı yenileyin.');
+    }
+}
+
+// Modal kapatma
+document.querySelector('.close-modal').addEventListener('click', function() {
+    document.getElementById('paymentModal').classList.remove('active');
+});
+
+window.addEventListener('click', function(e) {
+    if (e.target === document.getElementById('paymentModal')) {
+        document.getElementById('paymentModal').classList.remove('active');
+    }
+});
+
+// CSS için spin animasyonu
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+`;
+document.head.appendChild(style);
     </script>
 </body>
 </html>
