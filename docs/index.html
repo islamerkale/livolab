@@ -2446,6 +2446,7 @@
 
         // Package selection and payment modal
        // ==================== PAYTR ÖDEME SİSTEMİ ====================
+// ==================== PAYTR ÖDEME SİSTEMİ ====================
 
 let selectedPackage = '';
 let selectedPrice = '';
@@ -2505,6 +2506,7 @@ document.getElementById('proceedPayment').addEventListener('click', function() {
     processPayment();
 });
 
+// YENİ processPayment fonksiyonu
 async function processPayment() {
     const customerName = document.getElementById('customerName').value.trim();
     const customerEmail = document.getElementById('customerEmail').value.trim();
@@ -2536,32 +2538,72 @@ async function processPayment() {
     paymentButton.disabled = true;
     
     try {
-        // PayTR token al
-        const tokenResult = await getPayTRToken({
+        const paymentData = {
             package: selectedPackage,
             price: selectedPrice,
             customer_name: customerName,
             customer_email: customerEmail,
             customer_phone: customerPhone
+        };
+        
+        console.log('Ödeme verisi:', paymentData);
+        
+        const response = await fetch('process_payment.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(paymentData)
         });
         
-        if (tokenResult.success) {
-            // Iframe'i göster ve token ile başlat
-            document.getElementById('customerInfoForm').style.display = 'none';
-            document.getElementById('paytriframe').style.display = 'block';
-            
-            initializePayTRIframe(tokenResult.token);
-        } else {
-            alert('Ödeme işlemi başlatılamadı: ' + tokenResult.error);
+        if (!response.ok) {
+            throw new Error(`HTTP hatası! Durum: ${response.status}`);
         }
+        
+        const result = await response.json();
+        console.log('Sunucu cevabı:', result);
+        
+        if (result.success) {
+            // PayTR iframe'ini başlat
+            initializePayTRIframe(result.token);
+        } else {
+            throw new Error(result.error || 'Ödeme işlemi başlatılamadı');
+        }
+        
     } catch (error) {
-        alert('Bir hata oluştu: ' + error.message);
+        console.error('Ödeme hatası:', error);
+        alert('Ödeme işlemi başlatılamadı: ' + error.message);
     } finally {
         // Loading state'i kaldır
         buttonText.style.display = 'block';
         loadingText.style.display = 'none';
         paymentButton.disabled = false;
     }
+}
+
+// YENİ PayTR iframe başlatma
+function initializePayTRIframe(token) {
+    const iframeContainer = document.getElementById('paytriframe');
+    iframeContainer.innerHTML = ''; // Temizle
+    
+    // Yeni iframe oluştur
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.paytr.com/odeme/guvenli/${token}`;
+    iframe.style.width = '100%';
+    iframe.style.height = '500px';
+    iframe.style.border = 'none';
+    iframe.style.borderRadius = '0.5rem';
+    
+    iframeContainer.appendChild(iframe);
+    iframeContainer.style.display = 'block';
+    
+    // Formu gizle
+    document.getElementById('customerInfoForm').style.display = 'none';
+    
+    // Iframe yüklendikten sonra
+    iframe.onload = function() {
+        console.log('PayTR iframe yüklendi');
+    };
 }
 
 function isValidEmail(email) {
@@ -2572,55 +2614,6 @@ function isValidEmail(email) {
 function isValidPhone(phone) {
     const phoneRegex = /^[0-9]{10,11}$/;
     return phoneRegex.test(phone.replace(/\D/g, ''));
-}
-
-async function getPayTRToken(paymentData) {
-    try {
-        const response = await fetch('process_payment.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(paymentData)
-        });
-        
-        if (!response.ok) {
-            throw new Error('Sunucu hatası: ' + response.status);
-        }
-        
-        return await response.json();
-    } catch (error) {
-        console.error('Token alma hatası:', error);
-        return { success: false, error: 'Sunucu bağlantı hatası' };
-    }
-}
-
-function initializePayTRIframe(token) {
-    // PayTR iframe'i başlat
-    if (typeof PayTRUI !== 'undefined') {
-        const paytr = new PayTRUI("iframe", "paytriframe");
-        paytr.setup({
-            type: "iframe",
-            element: "paytriframe",
-            token: token,
-            debug: true,
-            callback: function(response) {
-                console.log("Ödeme Sonucu:", response);
-                if (response.status === "success") {
-                    // Başarılı ödeme
-                    document.getElementById('paymentModal').classList.remove('active');
-                    // success.php'ye yönlendirme PayTR tarafından yapılacak
-                } else {
-                    // Başarısız ödeme
-                    alert('Ödeme işlemi başarısız: ' + response.error);
-                    document.getElementById('paymentModal').classList.remove('active');
-                }
-            }
-        });
-    } else {
-        console.error('PayTR UI kütüphanesi yüklenemedi');
-        alert('Ödeme sistemi yüklenirken bir hata oluştu. Lütfen sayfayı yenileyin.');
-    }
 }
 
 // Modal kapatma event listener'ları
