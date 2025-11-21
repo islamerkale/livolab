@@ -2644,6 +2644,44 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// Scroll animation for education cards
+function initScrollAnimations() {
+    const educationCards = document.querySelectorAll('.education-card');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('animate');
+                }, 100);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    educationCards.forEach(card => {
+        observer.observe(card);
+    });
+}
+
+// Sayfa yüklendiğinde çalıştır
+window.addEventListener('load', function() {
+    setTimeout(() => {
+        initScrollAnimations();
+    }, 2000);
+});
+
+// Ayrıca mevcut loading event'inize de ekleyebilirsiniz
+window.addEventListener('load', function() {
+    setTimeout(() => {
+        document.getElementById('loading').classList.add('hidden');
+        initScrollAnimations(); // Bu satırı ekleyin
+    }, 1500);
+});
+
     </script>
 </body>
 </html>
