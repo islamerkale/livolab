@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -659,6 +658,35 @@
         .price-label {
             font-size: 0.875rem;
             opacity: 0.8;
+        }
+
+        /* Discount styles */
+        .price-old {
+            text-decoration: line-through;
+            opacity: 0.6;
+            font-size: 1rem;
+            font-weight: 400;
+            margin-right: 0.5rem;
+        }
+
+        .discount-badge {
+            display: inline-block;
+            background: #e53935;
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.15rem 0.45rem;
+            border-radius: 0.35rem;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+            letter-spacing: 0.5px;
+        }
+
+        .price-wrapper {
+            display: flex;
+            align-items: baseline;
+            gap: 0.25rem;
+            flex-wrap: wrap;
         }
 
         .package-features {
@@ -1761,13 +1789,21 @@
                         <div class="package-price-option" data-package="diamond" data-price="8064" data-link="https://www.shopier.com/livolab/41459728">
                             <div>
                                 <div class="price-label">Haftalık 2, ayda 8 ders</div>
-                                <div class="price">8.000₺</div>
+                                <div class="price-wrapper">
+                                    <span class="price-old">10.000₺</span>
+                                    <span class="price">8.000₺</span>
+                                    <span class="discount-badge">%20 İNDİRİM</span>
+                                </div>
                             </div>
                         </div>
                         <div class="package-price-option" data-package="diamond" data-price="10080" data-link="https://www.shopier.com/livolab/41460517">
                             <div>
                                 <div class="price-label">Haftalık 3, ayda 12 ders</div>
-                                <div class="price">10.000₺</div>
+                                <div class="price-wrapper">
+                                    <span class="price-old">12.500₺</span>
+                                    <span class="price">10.000₺</span>
+                                    <span class="discount-badge">%20 İNDİRİM</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1797,13 +1833,21 @@
                         <div class="package-price-option" data-package="vip" data-price="9920" data-link="https://www.shopier.com/livolab/41458029">
                             <div>
                                 <div class="price-label">Haftalık 2, ayda 8 ders</div>
-                                <div class="price">12.400₺</div>
+                                <div class="price-wrapper">
+                                    <span class="price-old">15.500₺</span>
+                                    <span class="price">12.400₺</span>
+                                    <span class="discount-badge">%20 İNDİRİM</span>
+                                </div>
                             </div>
                         </div>
                         <div class="package-price-option" data-package="vip" data-price="10880" data-link="https://www.shopier.com/livolab/41458976">
                             <div>
                                 <div class="price-label">Haftalık 3, ayda 12 ders</div>
-                                <div class="price">13.600₺</div>
+                                <div class="price-wrapper">
+                                    <span class="price-old">17.000₺</span>
+                                    <span class="price">13.600₺</span>
+                                    <span class="discount-badge">%20 İNDİRİM</span>
+                                </div>
                             </div>
                         </div>
                     </div>
